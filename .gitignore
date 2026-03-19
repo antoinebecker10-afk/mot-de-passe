@@ -1,0 +1,8 @@
+.claude-flow/
+.claude/
+.mcp.json
+*.mp4
+*.mp3
+*.wav
+_bmad/
+50)
