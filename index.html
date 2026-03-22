@@ -3,26 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>MOT DE PASSE</title>
-<meta name="theme-color" content="#0F0F1A">
+<title>DEVINETTE</title>
+<meta name="theme-color" content="#0D0B1A">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{touch-action:manipulation}
 :root{
-  --orange:#FF6B00;--orange-light:#FFA64D;--orange-glow:0 0 20px #FF6B0088,0 0 40px #FF6B0044;
-  --blue:#00A1FF;--blue-light:#4DC4FF;--blue-glow:0 0 20px #00A1FF88,0 0 40px #00A1FF44;
-  --bg:#0F0F1A;--bg2:#1A1A2E;--bg3:#16213E;--bg4:#1E2D4A;
-  --gold:#FFD700;--gold-glow:0 0 20px #FFD70088,0 0 40px #FFD70044;
-  --green:#00E676;--red:#FF1744;--white:#F0F0F5;--muted:#8888AA;
+  --orange:#C23469;--orange-light:#D65A8A;--orange-glow:0 0 20px #C2346988,0 0 40px #C2346944;
+  --blue:#78F5F7;--blue-light:#A0F8FA;--blue-glow:0 0 20px #78F5F788,0 0 40px #78F5F744;
+  --bg:#0D0B1A;--bg2:#151228;--bg3:#1C1835;--bg4:#252142;
+  --gold:#C66481;--gold-glow:0 0 20px #C6648188,0 0 40px #C6648144;
+  --green:#78F5F7;--red:#C23469;--white:#F0ECF5;--muted:#8878AA;
+  --violet:#601B82;--violet-light:#8B3FB3;--violet-glow:0 0 20px #601B8288,0 0 40px #601B8244;
   --font-title:'Bebas Neue','Impact',sans-serif;
-  --font-body:'Inter','Segoe UI',system-ui,sans-serif;
+  --font-body:'Outfit','Segoe UI',system-ui,sans-serif;
 }
 html,body{width:100%;height:100dvh;overflow:hidden;background:var(--bg);color:var(--white);font-family:var(--font-body);padding-bottom:env(safe-area-inset-bottom)}
 body{position:relative}
@@ -31,9 +32,10 @@ body{position:relative}
 body::before{
   content:'';position:fixed;inset:0;z-index:0;
   background:
-    radial-gradient(circle at 20% 50%,#FF6B0008 0%,transparent 50%),
-    radial-gradient(circle at 80% 50%,#00A1FF08 0%,transparent 50%),
-    repeating-linear-gradient(60deg,transparent,transparent 60px,#ffffff03 60px,#ffffff03 61px);
+    radial-gradient(circle at 20% 50%,#C2346910 0%,transparent 50%),
+    radial-gradient(circle at 80% 50%,#601B8210 0%,transparent 50%),
+    radial-gradient(circle at 50% 80%,#78F5F708 0%,transparent 40%),
+    repeating-linear-gradient(60deg,transparent,transparent 60px,#ffffff02 60px,#ffffff02 61px);
   animation:bgShift 20s ease-in-out infinite alternate;
 }
 @keyframes bgShift{0%{opacity:.6}100%{opacity:1}}
@@ -51,23 +53,22 @@ body::before{
 /* ===== OVERWATCH SHAPES ===== */
 .ow-card{
   background:var(--bg3);border:1px solid #ffffff15;
-  clip-path:polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%);
+  border-radius:14px;
   padding:24px;position:relative;
 }
-.ow-card::after{content:'';position:absolute;bottom:0;right:0;width:12px;height:12px;background:var(--muted);opacity:.3;clip-path:polygon(100% 0,100% 100%,0 100%)}
 .ow-btn{
   font-family:var(--font-title);font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;
   border:none;padding:14px 32px;cursor:pointer;position:relative;color:var(--white);
-  clip-path:polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%);
+  border-radius:10px;
   transition:all .2s ease;
 }
 .ow-btn:hover{transform:translateY(-2px);filter:brightness(1.2)}
 .ow-btn:active{transform:translateY(0);filter:brightness(.9)}
 .ow-btn.orange{background:var(--orange)}
 .ow-btn.blue{background:var(--blue)}
-.ow-btn.gold{background:linear-gradient(135deg,#FFD700,#FFA000);color:#1A1A2E}
+.ow-btn.gold{background:linear-gradient(135deg,#C23469,#601B82);color:#F0ECF5}
 .ow-btn.dark{background:var(--bg3);border:1px solid #ffffff20}
-.ow-btn.green{background:var(--green);color:#1A1A2E}
+.ow-btn.green{background:var(--green);color:#0D0B1A}
 .ow-btn.red{background:var(--red)}
 .ow-btn.small{font-size:.85rem;padding:10px 20px;letter-spacing:2px}
 .ow-btn:disabled{opacity:.4;pointer-events:none}
@@ -85,7 +86,7 @@ body::before{
 #splash{background:radial-gradient(ellipse at center,var(--bg2),var(--bg))}
 .splash-logo{
   text-align:center;
-  filter:drop-shadow(0 0 30px #FF6B0066);
+  filter:drop-shadow(0 0 30px #601B8266);
   animation:logoGlow 2s ease-in-out infinite alternate;
 }
 .splash-logo img{
@@ -97,17 +98,16 @@ body::before{
   color:var(--muted);margin-top:8px;text-transform:uppercase;
 }
 .splash-hint{color:var(--muted);font-size:.85rem;margin-top:40px;animation:pulse 2s infinite}
-@keyframes logoGlow{0%{filter:drop-shadow(0 0 30px #FF6B0066)}100%{filter:drop-shadow(0 0 50px #FF6B00AA)}}
+@keyframes logoGlow{0%{filter:drop-shadow(0 0 30px #601B8266)}100%{filter:drop-shadow(0 0 50px #C23469AA) drop-shadow(0 0 80px #601B8266)}}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 
 /* ===== MENU ===== */
 .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:700px;width:100%;margin-top:30px}
 .menu-card{
-  background:var(--bg3);border:1px solid #ffffff10;border-radius:2px;padding:28px 20px;
+  background:linear-gradient(135deg,var(--bg3),var(--bg4));border:1px solid #ffffff10;border-radius:12px;padding:28px 20px;
   cursor:pointer;text-align:center;transition:all .3s ease;position:relative;overflow:hidden;
-  clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%);
 }
-.menu-card:hover{border-color:#ffffff30;transform:translateY(-4px);background:var(--bg4)}
+.menu-card:hover{border-color:#C2346950;transform:translateY(-4px);background:linear-gradient(135deg,var(--bg4),#1C1835);box-shadow:0 8px 32px #601B8230}
 .menu-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:3px;
 }
@@ -127,7 +127,7 @@ body::before{
 .team-row input{
   flex:1;background:var(--bg3);border:2px solid #ffffff15;color:var(--white);
   font-family:var(--font-body);font-size:1rem;padding:10px 14px;border-radius:2px;
-  clip-path:polygon(0 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%);
+  border-radius:8px;
 }
 .team-row input:focus{outline:none}
 .team-row input.t-orange:focus{border-color:var(--orange)}
@@ -171,7 +171,7 @@ body::before{
 .vs-badge{
   font-family:var(--font-title);font-size:1rem;letter-spacing:3px;color:var(--muted);
   background:var(--bg);padding:4px 14px;
-  clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);
+  border-radius:8px;
 }
 
 .game-body{
@@ -187,7 +187,7 @@ body::before{
 .turn-indicator{
   font-family:var(--font-title);font-size:1.3rem;letter-spacing:4px;text-transform:uppercase;
   padding:5px 24px;
-  clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);
+  border-radius:8px;
   animation:turnSlide .4s ease-out;
 }
 .turn-indicator.orange{background:var(--orange);color:var(--white)}
@@ -204,15 +204,15 @@ body::before{
   text-transform:uppercase;
   background:linear-gradient(135deg,var(--bg3),var(--bg4));
   border:2px solid #ffffff15;
-  clip-path:polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%);
+  border-radius:16px;
   padding:24px 30px;
   transition:border-color .3s,box-shadow .3s;
 }
-.word-front.glow-gold{border-color:var(--gold);box-shadow:0 0 30px #FFD70022,inset 0 0 30px #FFD70008}
-.word-front.glow-green{border-color:var(--green);box-shadow:0 0 30px #00E67622;animation:successPulse .6s ease-out}
-.word-front.glow-red{border-color:var(--red);box-shadow:0 0 30px #FF174422;animation:failPulse .4s ease-out}
-@keyframes successPulse{0%{box-shadow:0 0 60px #00E67644}100%{box-shadow:0 0 30px #00E67622}}
-@keyframes failPulse{0%{box-shadow:0 0 60px #FF174444}100%{box-shadow:0 0 30px #FF174422}}
+.word-front.glow-gold{border-color:var(--gold);box-shadow:0 0 30px #C6648122,inset 0 0 30px #C6648108}
+.word-front.glow-green{border-color:var(--green);box-shadow:0 0 30px #78F5F722;animation:successPulse .6s ease-out}
+.word-front.glow-red{border-color:var(--red);box-shadow:0 0 30px #C2346922;animation:failPulse .4s ease-out}
+@keyframes successPulse{0%{box-shadow:0 0 60px #78F5F744}100%{box-shadow:0 0 30px #78F5F722}}
+@keyframes failPulse{0%{box-shadow:0 0 60px #C2346944}100%{box-shadow:0 0 30px #C2346922}}
 
 .word-hidden{
   font-family:var(--font-title);font-size:clamp(1.5rem,5vw,2.8rem);letter-spacing:10px;
@@ -281,10 +281,10 @@ body::before{
   background:linear-gradient(90deg,var(--bg3),var(--bg3)cc);
   border-left:3px solid var(--muted);
   animation:hintIn .4s cubic-bezier(.2,.8,.3,1);
-  clip-path:polygon(0 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%);
+  border-radius:8px;
 }
-.hint-row.orange{border-left-color:var(--orange);background:linear-gradient(90deg,#FF6B0010,transparent)}
-.hint-row.blue{border-left-color:var(--blue);background:linear-gradient(90deg,#00A1FF10,transparent)}
+.hint-row.orange{border-left-color:var(--orange);background:linear-gradient(90deg,#C2346910,transparent)}
+.hint-row.blue{border-left-color:var(--blue);background:linear-gradient(90deg,#78F5F710,transparent)}
 .hint-num{font-family:var(--font-title);font-size:1.1rem;color:var(--muted);min-width:24px}
 .hint-text{font-size:1.15rem;font-weight:600;letter-spacing:2px;text-transform:uppercase}
 @keyframes hintIn{from{opacity:0;transform:translateX(-30px) scale(.95)}to{opacity:1;transform:translateX(0) scale(1)}}
@@ -340,7 +340,7 @@ body::before{
 .final-vs{font-family:var(--font-title);font-size:1.5rem;color:var(--muted);letter-spacing:4px;padding-bottom:20px}
 
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;max-width:500px;width:100%}
-.stat-card{background:var(--bg3);padding:14px;text-align:center;clip-path:polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%)}
+.stat-card{background:var(--bg3);padding:14px;text-align:center;border-radius:10px}
 .stat-val{font-family:var(--font-title);font-size:1.6rem;color:var(--gold)}
 .stat-label{font-size:.7rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
 
@@ -369,7 +369,7 @@ body::before{
 .sb-score-cell{font-family:var(--font-title);font-size:1.2rem;color:var(--white)}
 .sb-empty{text-align:center;color:var(--muted);padding:40px;font-size:.9rem}
 
-/* ===== MOT DE PASSE FINAL ===== */
+/* ===== DEVINETTE FINAL ===== */
 .password-overlay{
   position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.9);
   display:none;align-items:center;justify-content:center;flex-direction:column;gap:20px;
@@ -381,7 +381,7 @@ body::before{
   color:var(--gold);text-shadow:var(--gold-glow);text-transform:uppercase;
   animation:goldPulse 1.5s ease-in-out infinite alternate;
 }
-@keyframes goldPulse{0%{text-shadow:0 0 20px #FFD70088}100%{text-shadow:0 0 40px #FFD700CC,0 0 80px #FFD70066}}
+@keyframes goldPulse{0%{text-shadow:0 0 20px #C6648188}100%{text-shadow:0 0 40px #C66481CC,0 0 80px #C6648166}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
 /* ===== PARTICLES ===== */
@@ -413,8 +413,8 @@ body::before{
 /* FLASH */
 .flash-green{animation:flashG .3s ease}
 .flash-red{animation:flashR .3s ease}
-@keyframes flashG{0%{box-shadow:inset 0 0 100px #00E67644}100%{box-shadow:none}}
-@keyframes flashR{0%{box-shadow:inset 0 0 100px #FF174444}100%{box-shadow:none}}
+@keyframes flashG{0%{box-shadow:inset 0 0 100px #78F5F744}100%{box-shadow:none}}
+@keyframes flashR{0%{box-shadow:inset 0 0 100px #C2346944}100%{box-shadow:none}}
 
 /* ===== VFX ===== */
 /* Floating ambient particles */
@@ -461,13 +461,13 @@ body::before{
 }
 @keyframes cardPulse{
   0%,100%{box-shadow:0 0 10px #ffffff08}
-  50%{box-shadow:0 0 30px #FFD70015,0 0 60px #FFD70008}
+  50%{box-shadow:0 0 30px #C6648115,0 0 60px #C6648108}
 }
 
 /* Timer critical VFX — screen edge glow */
 .timer-danger-vfx{
   position:fixed;inset:0;z-index:2;pointer-events:none;
-  box-shadow:inset 0 0 80px #FF174430,inset 0 0 200px #FF174415;
+  box-shadow:inset 0 0 80px #C2346930,inset 0 0 200px #C2346915;
   animation:dangerPulse 1s ease-in-out infinite;
 }
 @keyframes dangerPulse{
@@ -508,11 +508,11 @@ body::before{
 /* Energy trail on timer bar */
 .timer-fill.critical::after{
   content:'';position:absolute;right:0;top:-2px;bottom:-2px;width:10px;
-  background:radial-gradient(circle,#FF174488,transparent);
+  background:radial-gradient(circle,#C2346988,transparent);
   border-radius:50%;
   animation:timerTrail .3s ease-in-out infinite alternate;
 }
-@keyframes timerTrail{0%{box-shadow:0 0 8px #FF1744}100%{box-shadow:0 0 20px #FF1744,0 0 40px #FF174466}}
+@keyframes timerTrail{0%{box-shadow:0 0 8px #C23469}100%{box-shadow:0 0 20px #C23469,0 0 40px #C2346966}}
 .timer-fill{position:relative}
 
 /* ===== BANNER ===== */
@@ -624,14 +624,14 @@ body::before{
 
 <!-- ===== SPLASH ===== -->
 <section class="screen active" id="splash" onclick="showScreen('menu')" onkeydown="showScreen('menu')">
-  <div class="splash-logo"><img src="logo.svg" alt="MOT DE PASSE"></div>
+  <div class="splash-logo"><img src="logo.svg" alt="DEVINETTE"></div>
   <div class="splash-sub">Le jeu</div>
   <div class="splash-hint">Appuyez pour commencer</div>
 </section>
 
 <!-- ===== MENU ===== -->
 <section class="screen" id="menu">
-  <div class="splash-logo" style="margin-bottom:6px"><img src="logo.svg" alt="MOT DE PASSE" style="width:clamp(160px,45vw,350px)"></div>
+  <div class="splash-logo" style="margin-bottom:6px"><img src="logo.svg" alt="DEVINETTE" style="width:clamp(160px,45vw,350px)"></div>
   <div class="ow-divider" style="max-width:400px"></div>
   <div class="menu-grid">
     <div class="menu-card c-orange" onclick="startConfig('classique')">
@@ -673,8 +673,8 @@ body::before{
 
   <div class="config-section" id="teamConfig">
     <h3>Équipes</h3>
-    <div class="team-row"><span class="team-dot t-orange"></span><input class="t-orange" id="team1Name" value="Équipe Orange" maxlength="20"></div>
-    <div class="team-row"><span class="team-dot t-blue"></span><input class="t-blue" id="team2Name" value="Équipe Bleue" maxlength="20"></div>
+    <div class="team-row"><span class="team-dot t-orange"></span><input class="t-orange" id="team1Name" value="Équipe Rose" maxlength="20"></div>
+    <div class="team-row"><span class="team-dot t-blue"></span><input class="t-blue" id="team2Name" value="Équipe Cyan" maxlength="20"></div>
   </div>
 
   <div class="config-section">
@@ -755,7 +755,7 @@ body::before{
   </div>
 
   <div class="game-body" id="gameBody">
-    <div class="turn-indicator orange" id="turnIndicator">Tour de l'Équipe Orange</div>
+    <div class="turn-indicator orange" id="turnIndicator">Tour de l'Équipe Rose</div>
 
     <div class="commentary" id="commentary"></div>
 
@@ -791,7 +791,7 @@ body::before{
   </div>
 
   <div class="tv-banner" id="tvBanner">
-    <span>MOT DE PASSE</span>
+    <span>DEVINETTE</span>
     <div class="banner-marquee"><span class="banner-text" id="bannerText">En direct de votre salon — Bonne chance aux deux équipes !</span></div>
     <span id="bannerClock">20:00</span>
   </div>
@@ -799,10 +799,10 @@ body::before{
 
 <!-- ===== PASSWORD FINAL ===== -->
 <div class="password-overlay" id="passwordOverlay">
-  <div class="password-title">⭐ MOT DE PASSE FINAL ⭐</div>
+  <div class="password-title">⭐ DEVINETTE FINAL ⭐</div>
   <div style="color:var(--muted);font-size:1rem;text-align:center;max-width:400px">
     Un mot lié aux 3 derniers mots mystères.<br>
-    <span id="pwTeamName" style="color:var(--orange)">Équipe Orange</span> tente de deviner !
+    <span id="pwTeamName" style="color:var(--orange)">Équipe Rose</span> tente de deviner !
   </div>
   <div class="word-front" style="min-width:280px;text-align:center;margin:10px 0">
     <div class="word-hidden" id="pwWord">? ? ? ? ?</div>
@@ -14335,7 +14335,7 @@ const Audio = {
 // ===== GAME STATE =====
 let G = {
   mode: 'classique',
-  team1: 'Équipe Orange', team2: 'Équipe Bleue',
+  team1: 'Équipe Rose', team2: 'Équipe Cyan',
   score1: 0, score2: 0,
   maxRounds: 10, currentRound: 1,
   difficulty: 0, // 0=mixed
@@ -14457,8 +14457,8 @@ function getConfigVal(id) {
 function startGame() {
   Audio.init();
 
-  G.team1 = document.getElementById('team1Name').value || 'Équipe Orange';
-  G.team2 = document.getElementById('team2Name').value || 'Équipe Bleue';
+  G.team1 = document.getElementById('team1Name').value || 'Équipe Rose';
+  G.team2 = document.getElementById('team2Name').value || 'Équipe Cyan';
   G.maxRounds = getConfigVal('roundsOpts');
   G.difficulty = getConfigVal('diffOpts');
   G.timerSeconds = getConfigVal('timerOpts');
@@ -14653,7 +14653,7 @@ function correctAnswer() {
   document.getElementById('gameBody').classList.add('flash-green');
   document.getElementById('game').classList.add('shake');
   const rect = document.getElementById('wordCardWrap').getBoundingClientRect();
-  spawnParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, G.currentTeam === 1 ? '#FF6B00' : '#00A1FF');
+  spawnParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, G.currentTeam === 1 ? '#C23469' : '#78F5F7');
   setTimeout(() => {
     document.getElementById('gameBody').classList.remove('flash-green');
     document.getElementById('game').classList.remove('shake');
@@ -15275,7 +15275,7 @@ function originalCorrect() {
   document.getElementById('gameBody').classList.add('flash-green');
   document.getElementById('game').classList.add('shake');
   const rect = document.getElementById('wordCardWrap').getBoundingClientRect();
-  spawnParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, G.currentTeam === 1 ? '#FF6B00' : '#00A1FF');
+  spawnParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, G.currentTeam === 1 ? '#C23469' : '#78F5F7');
   setTimeout(() => {
     document.getElementById('gameBody').classList.remove('flash-green');
     document.getElementById('game').classList.remove('shake');
@@ -15386,7 +15386,7 @@ function renderMissedWords() {
     return;
   }
   const words = G.missedWords.map(w =>
-    `<span style="display:inline-block;background:var(--bg3);border:1px solid #FF174433;color:var(--red);padding:4px 12px;margin:3px;font-family:var(--font-title);font-size:.9rem;letter-spacing:2px;clip-path:polygon(0 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%)">${w}</span>`
+    `<span style="display:inline-block;background:var(--bg3);border:1px solid #C2346933;color:var(--red);padding:4px 12px;margin:3px;font-family:var(--font-title);font-size:.9rem;letter-spacing:2px;border-radius:6px">${w}</span>`
   ).join('');
   container.innerHTML = `
     <div style="font-family:var(--font-title);font-size:1rem;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;text-align:center">Mots ratés</div>
@@ -15403,7 +15403,7 @@ const VFX = {
   startAmbient() {
     const container = document.getElementById('vfxAmbient');
     container.innerHTML = '';
-    const colors = ['#FF6B00','#00A1FF','#FFD700','#00E676','#FF69B4','#9B59B6'];
+    const colors = ['#C23469','#78F5F7','#C66481','#78F5F7','#FF69B4','#9B59B6'];
     for (let i = 0; i < 25; i++) {
       const dot = document.createElement('div');
       dot.className = 'vfx-dot';
@@ -15483,7 +15483,7 @@ const VFX = {
   // Victory fireworks
   fireworks() {
     const container = document.getElementById('vfxLayer');
-    const colors = ['#FF6B00','#00A1FF','#FFD700','#00E676','#FF69B4','#9B59B6','#FF1744'];
+    const colors = ['#C23469','#78F5F7','#C66481','#78F5F7','#FF69B4','#9B59B6','#C23469'];
     for (let burst = 0; burst < 6; burst++) {
       const cx = 100 + Math.random() * (window.innerWidth - 200);
       const cy = 100 + Math.random() * (window.innerHeight - 300);
@@ -15538,10 +15538,10 @@ function updateClock() {
 // Banner messages
 const BANNER_MSGS = [
   "En direct de votre salon — Bonne chance aux deux équipes !",
-  "MOT DE PASSE — Le jeu où chaque mot compte !",
+  "DEVINETTE — Le jeu où chaque mot compte !",
   "Qui sera le champion des mots ce soir ?",
   "N'oubliez pas : un seul mot par indice !",
-  "Plus de 500 mots dans la base — pas de triche possible !",
+  "Plus de 3000 mots dans la base — pas de triche possible !",
 ];
 setInterval(() => {
   document.getElementById('bannerText').textContent = randomFrom(BANNER_MSGS);
