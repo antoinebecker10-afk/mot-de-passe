@@ -702,6 +702,14 @@ body::before{
     <div class="cat-grid" id="catGrid"></div>
   </div>
 
+  <div class="config-section" id="scoringConfig">
+    <h3>Scoring</h3>
+    <div class="config-options" id="scoringOpts">
+      <div class="config-opt selected" data-val="points">Points</div>
+      <div class="config-opt" data-val="count">Mots trouvés</div>
+    </div>
+  </div>
+
   <div class="config-section" id="timerConfig">
     <h3>Timer (secondes par tour)</h3>
     <div class="config-options" id="timerOpts">
@@ -14354,6 +14362,7 @@ let G = {
   originalPhase: 0, // 0=not started, 1=team1 playing, 2=team1 done, 3=team2 playing, 4=done
   originalWordRevealed: false, // has "Voir le mot" been clicked this word?
   originalScore1: 0, originalScore2: 0,
+  scoringMode: 'points', // 'points' or 'count'
 };
 
 // ===== SCREEN MANAGEMENT =====
@@ -14424,6 +14433,7 @@ function startConfig(mode) {
   setupConfigOpts('diffOpts');
   setupConfigOpts('timerOpts');
   setupConfigOpts('durationOpts');
+  setupConfigOpts('scoringOpts');
 
   showScreen('config');
 }
@@ -14452,6 +14462,8 @@ function startGame() {
   G.maxRounds = getConfigVal('roundsOpts');
   G.difficulty = getConfigVal('diffOpts');
   G.timerSeconds = getConfigVal('timerOpts');
+  const scoringSel = document.getElementById('scoringOpts').querySelector('.selected');
+  G.scoringMode = scoringSel ? scoringSel.dataset.val : 'points';
   G.categories = [...document.querySelectorAll('.cat-tag.selected')].map(t => t.dataset.cat);
   if (G.categories.length === 0) G.categories = Object.keys(WORDS);
 
@@ -14605,8 +14617,13 @@ function correctAnswer() {
   stopTimer();
   Audio.correct();
 
-  const pointsTable = [5, 3, 2, 1, 0.5];
-  let points = pointsTable[Math.min(G.revealedHints, pointsTable.length - 1)] || 0.5;
+  let points;
+  if (G.scoringMode === 'count') {
+    points = 1;
+  } else {
+    const pointsTable = [5, 3, 2, 1, 0.5];
+    points = pointsTable[Math.min(G.revealedHints, pointsTable.length - 1)] || 0.5;
+  }
 
   if (G.activeDouble) {
     points *= 2;
@@ -14821,7 +14838,7 @@ function passwordCorrect() {
   clearInterval(parseInt(overlay.dataset.interval));
 
   const team = parseInt(overlay.dataset.team);
-  const bonus = 5;
+  const bonus = G.scoringMode === 'count' ? 1 : 5;
   if (team === 1) G.score1 += bonus;
   else G.score2 += bonus;
 
@@ -15231,9 +15248,13 @@ function originalTimerEnd() {
 function originalCorrect() {
   Audio.correct();
 
-  // Scoring: 5pts base, -1 per hint used (min 1pt)
-  const pointsTable = [5, 3, 2, 1];
-  let points = pointsTable[Math.min(G.revealedHints, pointsTable.length - 1)];
+  let points;
+  if (G.scoringMode === 'count') {
+    points = 1;
+  } else {
+    const pointsTable = [5, 3, 2, 1];
+    points = pointsTable[Math.min(G.revealedHints, pointsTable.length - 1)];
+  }
 
   if (G.currentTeam === 1) G.score1 += points;
   else G.score2 += points;
