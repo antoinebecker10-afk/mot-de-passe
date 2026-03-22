@@ -79,12 +79,13 @@ body::before{
 /* ===== SPLASH ===== */
 #splash{background:radial-gradient(ellipse at center,var(--bg2),var(--bg))}
 .splash-logo{
-  font-family:var(--font-title);font-size:clamp(3rem,10vw,7rem);letter-spacing:12px;text-transform:uppercase;
-  text-align:center;line-height:1;
-  background:linear-gradient(135deg,var(--orange),var(--gold),var(--orange-light));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-align:center;
   filter:drop-shadow(0 0 30px #FF6B0066);
   animation:logoGlow 2s ease-in-out infinite alternate;
+}
+.splash-logo img{
+  width:clamp(220px, 60vw, 500px);height:auto;
+  display:block;margin:0 auto;
 }
 .splash-sub{
   font-family:var(--font-title);font-size:clamp(1rem,3vw,1.5rem);letter-spacing:8px;
@@ -396,6 +397,108 @@ body::before{
 @keyframes flashG{0%{box-shadow:inset 0 0 100px #00E67644}100%{box-shadow:none}}
 @keyframes flashR{0%{box-shadow:inset 0 0 100px #FF174444}100%{box-shadow:none}}
 
+/* ===== VFX ===== */
+/* Floating ambient particles */
+.vfx-ambient{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.vfx-dot{
+  position:absolute;border-radius:50%;opacity:0;
+  animation:vfxFloat var(--dur,8s) var(--delay,0s) ease-in-out infinite;
+}
+@keyframes vfxFloat{
+  0%{opacity:0;transform:translateY(100vh) scale(0)}
+  10%{opacity:.6}
+  90%{opacity:.6}
+  100%{opacity:0;transform:translateY(-20vh) scale(1)}
+}
+
+/* Streak / combo effect */
+.streak-badge{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
+  font-family:var(--font-title);font-size:clamp(3rem,10vw,6rem);
+  letter-spacing:8px;text-transform:uppercase;pointer-events:none;z-index:100;
+  color:var(--gold);text-shadow:var(--gold-glow);
+  animation:streakPop .8s cubic-bezier(.2,.8,.2,1) forwards;
+}
+@keyframes streakPop{
+  0%{transform:translate(-50%,-50%) scale(0) rotate(-10deg);opacity:1}
+  50%{transform:translate(-50%,-50%) scale(1.2) rotate(3deg);opacity:1}
+  100%{transform:translate(-50%,-50%) scale(1.5) rotate(0);opacity:0}
+}
+
+/* Score burst ring */
+.score-burst{
+  position:absolute;width:80px;height:80px;border-radius:50%;
+  border:3px solid var(--gold);pointer-events:none;
+  animation:burstRing .6s ease-out forwards;
+}
+@keyframes burstRing{
+  0%{transform:scale(0);opacity:1}
+  100%{transform:scale(3);opacity:0}
+}
+
+/* Card glow pulse during play */
+.word-front.pulse-glow{
+  animation:cardPulse 2s ease-in-out infinite;
+}
+@keyframes cardPulse{
+  0%,100%{box-shadow:0 0 10px #ffffff08}
+  50%{box-shadow:0 0 30px #FFD70015,0 0 60px #FFD70008}
+}
+
+/* Timer critical VFX — screen edge glow */
+.timer-danger-vfx{
+  position:fixed;inset:0;z-index:2;pointer-events:none;
+  box-shadow:inset 0 0 80px #FF174430,inset 0 0 200px #FF174415;
+  animation:dangerPulse 1s ease-in-out infinite;
+}
+@keyframes dangerPulse{
+  0%,100%{opacity:.3}
+  50%{opacity:1}
+}
+
+/* Correct answer — radial shockwave */
+.shockwave{
+  position:absolute;width:20px;height:20px;border-radius:50%;
+  border:2px solid var(--green);pointer-events:none;z-index:20;
+  animation:shockExpand .5s ease-out forwards;
+}
+@keyframes shockExpand{
+  0%{transform:scale(1);opacity:.8}
+  100%{transform:scale(40);opacity:0}
+}
+
+/* Skip — glitch effect */
+.glitch{animation:glitch .3s ease-out}
+@keyframes glitch{
+  0%{filter:none}
+  20%{filter:hue-rotate(90deg) saturate(3);transform:translateX(-3px)}
+  40%{filter:hue-rotate(-90deg) saturate(2);transform:translateX(3px)}
+  60%{filter:hue-rotate(180deg);transform:translateX(-2px)}
+  80%{filter:hue-rotate(0deg) saturate(1);transform:translateX(1px)}
+  100%{filter:none;transform:translateX(0)}
+}
+
+/* Victory firework burst */
+.firework{
+  position:absolute;width:4px;height:4px;border-radius:50%;
+  animation:fireworkShoot var(--dur,1s) ease-out forwards;
+}
+@keyframes fireworkShoot{
+  0%{opacity:1;transform:translate(0,0) scale(1)}
+  60%{opacity:1;transform:translate(var(--dx,0),var(--dy,-200px)) scale(1.5)}
+  100%{opacity:0;transform:translate(calc(var(--dx,0) * 1.5),calc(var(--dy,-200px) + 50px)) scale(0)}
+}
+
+/* Energy trail on timer bar */
+.timer-fill.critical::after{
+  content:'';position:absolute;right:0;top:-2px;bottom:-2px;width:10px;
+  background:radial-gradient(circle,#FF174488,transparent);
+  border-radius:50%;
+  animation:timerTrail .3s ease-in-out infinite alternate;
+}
+@keyframes timerTrail{0%{box-shadow:0 0 8px #FF1744}100%{box-shadow:0 0 20px #FF1744,0 0 40px #FF174466}}
+.timer-fill{position:relative}
+
 /* ===== BANNER ===== */
 .tv-banner{
   position:fixed;bottom:0;left:0;right:0;z-index:50;
@@ -472,19 +575,21 @@ body::before{
 
 <div class="hex-grid"></div>
 <div class="particles-container" id="particles"></div>
+<div class="vfx-ambient" id="vfxAmbient"></div>
+<div id="vfxLayer" style="position:fixed;inset:0;z-index:99;pointer-events:none"></div>
 
 <button class="fs-btn" onclick="toggleFullscreen()" title="Plein écran (F)">⛶</button>
 
 <!-- ===== SPLASH ===== -->
 <section class="screen active" id="splash" onclick="showScreen('menu')" onkeydown="showScreen('menu')">
-  <div class="splash-logo">MOT DE<br>PASSE</div>
+  <div class="splash-logo"><img src="logo.png" alt="MOT DE PASSE"></div>
   <div class="splash-sub">Le jeu</div>
   <div class="splash-hint">Appuyez pour commencer</div>
 </section>
 
 <!-- ===== MENU ===== -->
 <section class="screen" id="menu">
-  <div class="splash-logo" style="font-size:clamp(2rem,6vw,4rem);margin-bottom:6px">MOT DE PASSE</div>
+  <div class="splash-logo" style="margin-bottom:6px"><img src="logo.png" alt="MOT DE PASSE" style="width:clamp(160px,45vw,350px)"></div>
   <div class="ow-divider" style="max-width:400px"></div>
   <div class="menu-grid">
     <div class="menu-card c-orange" onclick="startConfig('classique')">
@@ -14648,9 +14753,13 @@ function showScreen(id) {
   if (id === 'game') {
     document.getElementById('tvBanner').classList.add('active');
     updateClock();
+    VFX.startAmbient();
   } else {
     document.getElementById('tvBanner').classList.remove('active');
+    VFX.stopAmbient();
+    VFX.hideDanger();
   }
+  if (id === 'results') { VFX.fireworks(); }
 }
 
 // ===== CONFIG =====
@@ -14803,7 +14912,7 @@ function nextWord() {
 
   display.textContent = '? ? ? ? ?';
   display.style.color = '';
-  card.className = 'word-front';
+  card.className = 'word-front pulse-glow';
   document.getElementById('hintsZone').innerHTML = '';
   document.getElementById('btnHint').disabled = false;
   document.getElementById('btnToggle').innerHTML = '<span class="btn-icon">&#128065;</span> Voir le mot';
@@ -14914,6 +15023,10 @@ function correctAnswer() {
 
   setCommentary(randomFrom(COMMENTS.correct));
   updateScoreDisplay();
+  VFX.showStreak();
+  VFX.scoreBurst(G.currentTeam);
+  VFX.shockwave();
+  VFX.hideDanger();
 
   // Check password final (every 3 words)
   if (G.recentWords.length >= 3 && G.recentWords.length % 3 === 0) {
@@ -14962,6 +15075,8 @@ function skipWord() {
   }, 400);
 
   setCommentary(randomFrom(COMMENTS.skip));
+  VFX.resetStreak();
+  VFX.glitch();
 
   if (G.currentRound >= G.maxRounds && G.maxRounds !== 99) {
     setTimeout(() => endGame(), 1500);
@@ -15013,8 +15128,9 @@ function updateTimerDisplay() {
   fill.className = 'timer-fill';
   text.className = 'timer-text';
 
-  if (pct < 20) { fill.classList.add('critical'); text.classList.add('critical'); }
-  else if (pct < 40) { fill.classList.add('warning'); text.classList.add('warning'); }
+  if (pct < 20) { fill.classList.add('critical'); text.classList.add('critical'); VFX.showDanger(); }
+  else if (pct < 40) { fill.classList.add('warning'); text.classList.add('warning'); VFX.hideDanger(); }
+  else { VFX.hideDanger(); }
 }
 
 function pauseGame() {
@@ -15510,6 +15626,9 @@ function originalCorrect() {
 
   setCommentary(randomFrom(COMMENTS.correct));
   updateScoreDisplay();
+  VFX.showStreak();
+  VFX.scoreBurst(G.currentTeam);
+  VFX.shockwave();
 
   // Next word (timer keeps running)
   setTimeout(() => {
@@ -15537,6 +15656,8 @@ function originalSkip() {
   setTimeout(() => document.getElementById('gameBody').classList.remove('flash-red'), 400);
 
   setCommentary(randomFrom(COMMENTS.skip));
+  VFX.resetStreak();
+  VFX.glitch();
 
   setTimeout(() => {
     originalPrepareWord();
@@ -15615,6 +15736,128 @@ function renderMissedWords() {
     <div style="text-align:center">${words}</div>
   `;
 }
+
+// ===== VFX ENGINE =====
+const VFX = {
+  streak: 0,
+  dangerEl: null,
+
+  // Floating ambient particles during game
+  startAmbient() {
+    const container = document.getElementById('vfxAmbient');
+    container.innerHTML = '';
+    const colors = ['#FF6B00','#00A1FF','#FFD700','#00E676','#FF69B4','#9B59B6'];
+    for (let i = 0; i < 25; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'vfx-dot';
+      const size = 2 + Math.random() * 5;
+      dot.style.cssText = `
+        left:${Math.random()*100}%;width:${size}px;height:${size}px;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        --dur:${6+Math.random()*10}s;--delay:${Math.random()*8}s;
+      `;
+      container.appendChild(dot);
+    }
+  },
+
+  stopAmbient() {
+    document.getElementById('vfxAmbient').innerHTML = '';
+  },
+
+  // Streak combo display
+  showStreak() {
+    this.streak++;
+    if (this.streak < 3) return;
+    const el = document.createElement('div');
+    el.className = 'streak-badge';
+    el.textContent = this.streak + 'x';
+    if (this.streak >= 5) { el.style.color = 'var(--orange)'; el.style.textShadow = 'var(--orange-glow)'; }
+    if (this.streak >= 8) { el.style.color = '#FF69B4'; el.style.fontSize = 'clamp(4rem,12vw,8rem)'; }
+    document.getElementById('vfxLayer').appendChild(el);
+    setTimeout(() => el.remove(), 900);
+  },
+
+  resetStreak() { this.streak = 0; },
+
+  // Score burst ring around score
+  scoreBurst(teamNum) {
+    const scoreEl = document.getElementById(teamNum === 1 ? 'gScore1' : 'gScore2');
+    const rect = scoreEl.getBoundingClientRect();
+    const ring = document.createElement('div');
+    ring.className = 'score-burst';
+    ring.style.left = (rect.left + rect.width/2 - 40) + 'px';
+    ring.style.top = (rect.top + rect.height/2 - 40) + 'px';
+    ring.style.borderColor = teamNum === 1 ? 'var(--orange)' : 'var(--blue)';
+    document.getElementById('vfxLayer').appendChild(ring);
+    setTimeout(() => ring.remove(), 700);
+  },
+
+  // Shockwave from card on correct answer
+  shockwave() {
+    const card = document.getElementById('wordCardWrap');
+    const rect = card.getBoundingClientRect();
+    const wave = document.createElement('div');
+    wave.className = 'shockwave';
+    wave.style.left = (rect.left + rect.width/2 - 10) + 'px';
+    wave.style.top = (rect.top + rect.height/2 - 10) + 'px';
+    document.getElementById('vfxLayer').appendChild(wave);
+    setTimeout(() => wave.remove(), 600);
+  },
+
+  // Glitch on skip/fail
+  glitch() {
+    const body = document.getElementById('gameBody');
+    body.classList.add('glitch');
+    setTimeout(() => body.classList.remove('glitch'), 350);
+  },
+
+  // Timer danger edge glow
+  showDanger() {
+    if (this.dangerEl) return;
+    this.dangerEl = document.createElement('div');
+    this.dangerEl.className = 'timer-danger-vfx';
+    document.getElementById('vfxLayer').appendChild(this.dangerEl);
+  },
+
+  hideDanger() {
+    if (this.dangerEl) { this.dangerEl.remove(); this.dangerEl = null; }
+  },
+
+  // Victory fireworks
+  fireworks() {
+    const container = document.getElementById('vfxLayer');
+    const colors = ['#FF6B00','#00A1FF','#FFD700','#00E676','#FF69B4','#9B59B6','#FF1744'];
+    for (let burst = 0; burst < 6; burst++) {
+      const cx = 100 + Math.random() * (window.innerWidth - 200);
+      const cy = 100 + Math.random() * (window.innerHeight - 300);
+      setTimeout(() => {
+        for (let i = 0; i < 30; i++) {
+          const f = document.createElement('div');
+          f.className = 'firework';
+          const angle = (Math.PI * 2 * i) / 30;
+          const dist = 80 + Math.random() * 120;
+          f.style.cssText = `
+            left:${cx}px;top:${cy}px;
+            background:${colors[Math.floor(Math.random()*colors.length)]};
+            --dx:${Math.cos(angle)*dist}px;--dy:${Math.sin(angle)*dist}px;
+            --dur:${0.6+Math.random()*0.6}s;
+            width:${3+Math.random()*4}px;height:${3+Math.random()*4}px;
+          `;
+          container.appendChild(f);
+          setTimeout(() => f.remove(), 1500);
+        }
+        Audio.play(400 + burst*100, 0.15, 'sine', 0.08);
+      }, burst * 400);
+    }
+  },
+
+  // Card pulse glow
+  cardPulse(enable) {
+    const card = document.getElementById('wordCard');
+    if (enable) card.classList.add('pulse-glow');
+    else card.classList.remove('pulse-glow');
+  }
+};
 
 // ===== UTILITIES =====
 function randomFrom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
