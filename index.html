@@ -15498,7 +15498,7 @@ function originalPrepareWord() {
   document.getElementById('btnHint').innerHTML = '<span class="btn-icon">&#128161;</span> Indice';
 
   // In original mode: before timer starts, show "Voir le mot" only
-  // Once timer is running, buttons are managed by originalRevealWord
+  // Once timer is running, reveal word immediately
   if (!G.timerInterval) {
     document.getElementById('btnCorrect').style.display = 'none';
     document.getElementById('btnSkip').style.display = 'none';
@@ -15506,6 +15506,20 @@ function originalPrepareWord() {
     document.getElementById('btnToggle').style.display = '';
     document.getElementById('btnHint').style.display = 'none';
     document.getElementById('btnPause').style.display = 'none';
+  } else {
+    // Timer already running — show word directly
+    G.originalWordRevealed = true;
+    G.wordVisible = true;
+    display.textContent = word.word;
+    display.style.color = 'var(--gold)';
+    display.classList.add('word-reveal');
+    setTimeout(() => display.classList.remove('word-reveal'), 500);
+    card.className = 'word-front glow-gold';
+    document.getElementById('btnCorrect').style.display = '';
+    document.getElementById('btnSkip').style.display = '';
+    document.getElementById('btnHint').style.display = '';
+    document.getElementById('btnToggle').style.display = 'none';
+    document.getElementById('btnPause').style.display = '';
   }
 
   updateTeamDisplay();
