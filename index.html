@@ -15467,27 +15467,10 @@ const VFX = {
 function randomFrom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
 function toggleFullscreen() {
-  const doc = document;
-  const el = doc.documentElement;
-  const isFs = doc.fullscreenElement || doc.webkitFullscreenElement || doc.msFullscreenElement;
-
-  // Check if Fullscreen API is available
-  const rfs = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
-  if (!rfs) {
-    // iOS Safari — no Fullscreen API, guide user to add to home screen
-    if (navigator.standalone === undefined && /iPhone|iPad|iPod/.test(navigator.userAgent)) {
-      alert('Sur iPhone, appuyez sur le bouton Partager (⬆️) puis "Sur l\'écran d\'accueil" pour jouer en plein écran.');
-    } else if (!window.matchMedia('(display-mode: fullscreen)').matches && !window.matchMedia('(display-mode: standalone)').matches) {
-      alert('Pour le plein écran, ajoutez le jeu à votre écran d\'accueil depuis le menu du navigateur.');
-    }
-    return;
-  }
-
-  if (!isFs) {
-    rfs.call(el).catch(() => {});
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => {});
   } else {
-    const efs = doc.exitFullscreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
-    if (efs) efs.call(doc);
+    document.exitFullscreen().catch(() => {});
   }
 }
 
