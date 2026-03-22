@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{touch-action:manipulation}
+html{touch-action:manipulation;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 :root{
   --orange:#FF6B00;--orange-light:#FFA64D;--orange-glow:0 0 20px #FF6B0088,0 0 40px #FF6B0044;
   --blue:#00A1FF;--blue-light:#4DC4FF;--blue-glow:0 0 20px #00A1FF88,0 0 40px #00A1FF44;
@@ -15470,9 +15470,21 @@ function toggleFullscreen() {
   const doc = document;
   const el = doc.documentElement;
   const isFs = doc.fullscreenElement || doc.webkitFullscreenElement || doc.msFullscreenElement;
+
+  // Check if Fullscreen API is available
+  const rfs = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+  if (!rfs) {
+    // iOS Safari — no Fullscreen API, guide user to add to home screen
+    if (navigator.standalone === undefined && /iPhone|iPad|iPod/.test(navigator.userAgent)) {
+      alert('Sur iPhone, appuyez sur le bouton Partager (⬆️) puis "Sur l\'écran d\'accueil" pour jouer en plein écran.');
+    } else if (!window.matchMedia('(display-mode: fullscreen)').matches && !window.matchMedia('(display-mode: standalone)').matches) {
+      alert('Pour le plein écran, ajoutez le jeu à votre écran d\'accueil depuis le menu du navigateur.');
+    }
+    return;
+  }
+
   if (!isFs) {
-    const rfs = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
-    if (rfs) rfs.call(el).catch(() => {});
+    rfs.call(el).catch(() => {});
   } else {
     const efs = doc.exitFullscreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
     if (efs) efs.call(doc);
