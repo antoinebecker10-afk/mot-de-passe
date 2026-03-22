@@ -2,8 +2,13 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>MOT DE PASSE</title>
+<meta name="theme-color" content="#0F0F1A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
@@ -2774,14 +2779,6 @@ const WORDS = {
         ""
       ],
       [
-        "HULA HOOP",
-        "CERCLE|HANCHE|TOURNER|ENFANT|PLASTIQUE"
-      ],
-      [
-        "MINI-GOLF",
-        "PARCOURS|TROU|CLUB|OBSTACLE|FAMILLE"
-      ],
-      [
         "BOOMERANG",
         "LANCER|REVENIR|AUSTRALIE|COURBE|BOIS"
       ],
@@ -2800,14 +2797,6 @@ const WORDS = {
       [
         "STEP",
         "MARCHE|MONTER|DESCENDRE|MUSIQUE|COURS"
-      ],
-      [
-        "TAI CHI",
-        "LENT|CHINE|MOUVEMENT|ZEN|MATIN"
-      ],
-      [
-        "BOXE FRANCAISE",
-        "PIED|POING|SAVATE|CHAUSSON|FRANCAIS"
       ],
       [
         "KENDO",
@@ -3056,10 +3045,6 @@ const WORDS = {
         ""
       ],
       [
-        "ULTRA-TRAIL",
-        "MONTAGNE|EXTREME|NUIT|DISTANCE|ENDURANCE"
-      ],
-      [
         "SWIMRUN",
         "NAGER|COURIR|ALTERNÉ|NATURE|EQUIPE"
       ],
@@ -3086,10 +3071,6 @@ const WORDS = {
       [
         "BODYBOARD",
         "PLANCHE|VAGUE|VENTRE|MOUSSE|PALMES"
-      ],
-      [
-        "OBSTACLE RACE",
-        "MUD|COURIR|GRIMPER|BOUE|SPARTAN"
       ],
       [
         "MMA",
@@ -3284,18 +3265,6 @@ const WORDS = {
       [
         "HIGHLINING",
         "CORDE|HAUTEUR|MONTAGNE|CANYON|EQUILIBRE"
-      ],
-      [
-        "BASE JUMP",
-        "SAUT|BATIMENT|FALAISE|PARACHUTE|EXTREME"
-      ],
-      [
-        "VOLCANO BOARDING",
-        "VOLCAN|PLANCHE|DESCENTE|CENDRE|EXTREME"
-      ],
-      [
-        "ICE CLIMBING",
-        "GLACE|PIOLET|CASCADE|FROID|VERTICAL"
       ],
       [
         "SANDBOARDING",
@@ -4408,10 +4377,6 @@ const WORDS = {
       [
         "PLAINE",
         "PLATE|VASTE|HORIZON|AGRICULTURE|VENT"
-      ],
-      [
-        "BANC DE SABLE",
-        "SABLE|MER|EMERGE|MAREE|DANGER"
       ]
     ],
     2: [
@@ -4690,10 +4655,6 @@ const WORDS = {
       [
         "CHEFCHAOUEN",
         "MAROC|BLEU|VILLAGE|MONTAGNE|PHOTOGENE"
-      ],
-      [
-        "CINQUE TERRE",
-        "ITALIE|VILLAGE|COLORE|FALAISE|MER"
       ],
       [
         "SANTORIN",
@@ -5974,20 +5935,12 @@ const WORDS = {
         "PESER|PLATEAU|EQUILIBRE|GRAMME|LABORATOIRE"
       ],
       [
-        "TUBE A ESSAI",
-        "VERRE|LIQUIDE|LABORATOIRE|LONG|REACTION"
-      ],
-      [
         "EPROUVETTE",
         "MESURER|GRADUEE|CYLINDRE|LIQUIDE|LABORATOIRE"
       ],
       [
         "ELEMENT",
         "TABLEAU|PERIODIQUE|CHIMIE|SYMBOLE|FONDAMENTAL"
-      ],
-      [
-        "ETOILE FILANTE",
-        "TRAINEE|NUIT|VOEU|LUMIERE|RAPIDE"
       ],
       [
         "CONSTELLATION",
@@ -6284,10 +6237,6 @@ const WORDS = {
         "ANGLE|PERSPECTIVE|DISTANCE|ETOILE|POSITION"
       ],
       [
-        "EFFET DOPPLER",
-        "SON|LUMIERE|FREQUENCE|DECALAGE|AMBULANCE"
-      ],
-      [
         "ELECTROMAGNETISME",
         "CHAMP|FORCE|LUMIERE|ONDE|MAXWELL"
       ],
@@ -6310,22 +6259,6 @@ const WORDS = {
       [
         "NEBULEUSE",
         "GAZ|ETOILE|COLOREE|ORION|ESPACE"
-      ],
-      [
-        "SELECTION NATURELLE",
-        "DARWIN|EVOLUTION|ADAPTER|SURVIE|ESPECE"
-      ],
-      [
-        "TROU DE VER",
-        "ESPACE|TUNNEL|EINSTEIN|RACCOURCI|THEORIE"
-      ],
-      [
-        "GEANTE ROUGE",
-        "ETOILE|ENORME|GONFLEE|ROUGE|VIEUX"
-      ],
-      [
-        "NAINE BLANCHE",
-        "ETOILE|MORTE|DENSE|PETIT|SOLEIL"
       ],
       [
         "RIBOSOME",
@@ -6516,26 +6449,6 @@ const WORDS = {
       [
         "",
         ""
-      ],
-      [
-        "RAYONNEMENT CERENKOV",
-        "LUMIERE|BLEU|VITESSE|NOYAU|EAU"
-      ],
-      [
-        "LOI DE HUBBLE",
-        "UNIVERS|EXPANSION|GALAXIE|DISTANCE|VITESSE"
-      ],
-      [
-        "EFFET CASIMIR",
-        "PLAQUES|VIDE|QUANTIQUE|FORCE|ATTRACTION"
-      ],
-      [
-        "CONSTANTE DE BOLTZMANN",
-        "TEMPERATURE|ENERGIE|STATISTIQUE|GAZ|FONDAMENTAL"
-      ],
-      [
-        "NOMBRE D'AVOGADRO",
-        "MOLE|ATOME|GRAND|NOMBRE|CHIMIE"
       ]
     ]
   },
@@ -6906,20 +6819,8 @@ const WORDS = {
         "TABLE|TISSU|REPAS|BLANC|ETENDRE"
       ],
       [
-        "OUVRE-BOITE",
-        "CONSERVE|METAL|TOURNER|LAME|COUVERCLE"
-      ],
-      [
-        "TIRE-BOUCHON",
-        "VIN|BOUTEILLE|BOUCHON|TOURNER|SPIRALE"
-      ],
-      [
         "THERMOS",
         "CHAUD|FROID|ISOLANT|BOISSON|TRANSPORT"
-      ],
-      [
-        "SAC A DOS",
-        "PORTER|DOS|RANDONNEE|POCHE|BRETELLE"
       ],
       [
         "TROUSSE",
@@ -6944,18 +6845,6 @@ const WORDS = {
       [
         "COUETTE",
         "LIT|CHAUD|PLUME|HIVER|HOUSSE"
-      ],
-      [
-        "SAC POUBELLE",
-        "DECHET|NOIR|NOUER|POUBELLE|REMPLIR"
-      ],
-      [
-        "SET DE TABLE",
-        "SOUS|ASSIETTE|PROTEGER|TABLE|DECORATIF"
-      ],
-      [
-        "DESSOUS DE VERRE",
-        "PROTEGER|TABLE|ROND|BOISSON|TRACE"
       ],
       [
         "DÉCAPSULEUR",
@@ -7214,10 +7103,6 @@ const WORDS = {
       [
         "BOUILLOIRE",
         "EAU|CHAUFFER|THE|SIFFLER|ELECTRIQUE"
-      ],
-      [
-        "PRESSE-AGRUMES",
-        "CITRON|JUS|ORANGE|PRESSER|FRAIS"
       ]
     ],
     3: [
@@ -8114,10 +7999,6 @@ const WORDS = {
         "PORTUGAL|NOSTALGIE|ABSENCE|MELANCOLIE|DOUX"
       ],
       [
-        "WABI-SABI",
-        "JAPON|IMPERFECTION|BEAUTE|EPHEMERE|PATINE"
-      ],
-      [
         "HYGGE",
         "DANEMARK|CONFORT|COCOONING|BOUGIE|CHALEUREUX"
       ],
@@ -8844,10 +8725,6 @@ const WORDS = {
         "CIME|ARBRE|FORET|TROPIQUE|LUMIERE"
       ],
       [
-        "SOUS-BOIS",
-        "OMBRE|FORET|MOUSSE|CHAMPIGNON|FOUGERE"
-      ],
-      [
         "CLAIRIERE",
         "OUVERTURE|FORET|LUMIERE|HERBE|CENTRE"
       ],
@@ -9274,10 +9151,6 @@ const WORDS = {
         "MUSIQUE|PLAYLIST|STREAMING|PODCAST|ECOUTER"
       ],
       [
-        "MOT DE PASSE",
-        "SECRET|TAPER|COMPTE|SECURITE|CARACTERE"
-      ],
-      [
         "MAIL",
         "ENVOYER|MESSAGE|ADRESSE|AROBASE|ELECTRONIQUE"
       ],
@@ -9548,10 +9421,6 @@ const WORDS = {
         "CARTE|CAPTEUR|PROGRAMME|ELECTRONIQUE|BRICOLER"
       ],
       [
-        "RASPBERRY PI",
-        "MINI|ORDINATEUR|CARTE|BRICOLER|LINUX"
-      ],
-      [
         "CAPTEUR",
         "DETECTER|MESURER|TEMPERATURE|MOUVEMENT|DONNEE"
       ],
@@ -9598,10 +9467,6 @@ const WORDS = {
       [
         "API",
         "INTERFACE|PROGRAMME|CONNECTER|DONNEES|SERVICE"
-      ],
-      [
-        "OPEN SOURCE",
-        "LIBRE|CODE|COMMUNAUTE|GRATUIT|PARTAGER"
       ],
       [
         "AGILE",
@@ -9730,14 +9595,6 @@ const WORDS = {
         ""
       ],
       [
-        "EDGE AI",
-        "EMBARQUE|LOCAL|INFERENCE|RAPIDE|CAPTEUR"
-      ],
-      [
-        "DIGITAL TWIN",
-        "JUMEAU|NUMERIQUE|SIMULATION|REEL|MODELE"
-      ],
-      [
         "WEB3",
         "DECENTRALISE|BLOCKCHAIN|TOKEN|PROPRIETAIRE|INTERNET"
       ],
@@ -9756,18 +9613,6 @@ const WORDS = {
       [
         "HOMOMORPHIQUE",
         "CHIFFREMENT|CALCUL|CHIFFRE|SECRET|DONNEES"
-      ],
-      [
-        "ZERO KNOWLEDGE",
-        "PREUVE|SAVOIR|RIEN|VERIFIER|CRYPTOGRAPHIE"
-      ],
-      [
-        "POST-QUANTIQUE",
-        "CRYPTOGRAPHIE|FUTUR|RESISTANT|QUANTIQUE|ALGORITHME"
-      ],
-      [
-        "FEDERATED LEARNING",
-        "APPRENTISSAGE|DISTRIBUE|PRIVE|MODELE|COLLABORATIF"
       ]
     ]
   },
@@ -10078,10 +9923,6 @@ const WORDS = {
         "EGYPTE|SYMBOLE|ECRITURE|ANCIEN|PAPYRUS"
       ],
       [
-        "PONT-LEVIS",
-        "CHATEAU|FOSSE|CHAINE|ENTREE|LEVER"
-      ],
-      [
         "DONJON",
         "TOUR|CHATEAU|PRISON|HAUTEUR|MEDIEVAL"
       ],
@@ -10352,10 +10193,6 @@ const WORDS = {
         "NAPOLEON|SOLEIL|VICTOIRE|TROIS|EMPEREUR"
       ],
       [
-        "PEARL HARBOR",
-        "JAPON|ATTAQUE|HAWAII|AMERIQUE|GUERRE"
-      ],
-      [
         "HIROSHIMA",
         "BOMBE|ATOMIQUE|JAPON|1945|DESTRUCTION"
       ],
@@ -10372,16 +10209,8 @@ const WORDS = {
         "DEBARQUEMENT|1944|PLAGE|ALLIES|GUERRE"
       ],
       [
-        "GUERRE FROIDE",
-        "USA|URSS|NUCLEAIRE|TENSION|RIDEAU"
-      ],
-      [
         "SUFFRAGETTES",
         "FEMME|VOTE|DROIT|COMBAT|ANGLETERRE"
-      ],
-      [
-        "DECLARATION DES DROITS",
-        "HOMME|LIBERTE|EGALITE|1789|LOI"
       ],
       [
         "APARTHEID",
@@ -10546,10 +10375,6 @@ const WORDS = {
         ""
       ],
       [
-        "GÖBEKLI TEPE",
-        "TURQUIE|ANCIEN|TEMPLE|NEOLITHIQUE|MYSTERE"
-      ],
-      [
         "DOGGERLAND",
         "SUBMERGEE|TERRE|MER|NORD|PREHISTOIRE"
       ],
@@ -10558,24 +10383,12 @@ const WORDS = {
         "SOUTERRAIN|TURQUIE|VILLE|PROFOND|CAPPADOCE"
       ],
       [
-        "GREAT ZIMBABWE",
-        "RUINE|AFRIQUE|PIERRE|EMPIRE|MYSTERE"
-      ],
-      [
-        "NAN MADOL",
-        "ILE|PACIFIQUE|CANAL|BASALTE|MYSTERE"
-      ],
-      [
         "CARNAC",
         "MENHIR|BRETAGNE|ALIGNEMENT|PREHISTOIRE|GRANITE"
       ],
       [
         "NEWGRANGE",
         "IRLANDE|TOMBE|SOLSTICE|LUMIERE|ANCIEN"
-      ],
-      [
-        "SKARA BRAE",
-        "ECOSSE|VILLAGE|NEOLITHIQUE|TEMPETE|CONSERVE"
       ]
     ]
   },
@@ -10882,14 +10695,6 @@ const WORDS = {
         "TOUR|BLOC|RETIRER|TREMBLER|EQUILIBRE"
       ],
       [
-        "TRIVIAL PURSUIT",
-        "QUESTION|CAMEMBERT|CULTURE|CATEGORIE|SAVOIR"
-      ],
-      [
-        "PUISSANCE 4",
-        "JETON|COLONNE|ALIGNER|QUATRE|STRATEGIE"
-      ],
-      [
         "MORPION",
         "CROIX|ROND|GRILLE|ALIGNER|TROIS"
       ],
@@ -10902,20 +10707,8 @@ const WORDS = {
         "MOT|DEVINER|SYLLABE|MON|PREMIER"
       ],
       [
-        "CACHE-CACHE",
-        "CACHER|CHERCHER|ENFANT|COMPTER|TROUVER"
-      ],
-      [
-        "COLIN-MAILLARD",
-        "YEUX|BANDE|ATTRAPER|TOUCHER|DEVINER"
-      ],
-      [
         "DEVINETTE",
         "QUESTION|REPONSE|DROLE|ENFANT|REFLECHIR"
-      ],
-      [
-        "BALLE AU PRISONNIER",
-        "LANCER|TOUCHE|ELIMINER|EQUIPE|COUR"
       ],
       [
         "KAPLA",
@@ -10928,10 +10721,6 @@ const WORDS = {
       [
         "POUPEE",
         "JOUER|HABILLER|ENFANT|MAISON|MINIATURE"
-      ],
-      [
-        "TRAIN ELECTRIQUE",
-        "RAIL|MINIATURE|CIRCUIT|LOCOMOTIVE|WAGON"
       ],
       [
         "MAQUETTE",
@@ -10958,24 +10747,8 @@ const WORDS = {
         "METAL|LANCER|ATTRAPER|MAIN|ANCIEN"
       ],
       [
-        "CORDE A SAUTER",
-        "SAUT|TOURNER|RYTHME|ENFANT|COUR"
-      ],
-      [
-        "JEU DE SOCIETE",
-        "PLATEAU|DES|PION|REGLES|AMIS"
-      ],
-      [
-        "CERF-VOLANT",
-        "VENT|FIL|CIEL|VOLER|PLAGE"
-      ],
-      [
         "BARBECUE",
         "GRILL|VIANDE|JARDIN|ETE|CHARBON"
-      ],
-      [
-        "BAIN DE SOLEIL",
-        "PLAGE|TRANSAT|BRONZER|CREME|ETE"
       ],
       [
         "PATINOIRE",
@@ -10984,10 +10757,6 @@ const WORDS = {
       [
         "AQUARIUM",
         "POISSON|VITRE|EAU|COLORE|VISITE"
-      ],
-      [
-        "FEUX D'ARTIFICE",
-        "NUIT|COULEUR|EXPLOSION|CIEL|FETE"
       ],
       [
         "CIRQUE",
@@ -11208,18 +10977,6 @@ const WORDS = {
         "REPLIQUE|BILLE|TACTIQUE|EQUIPE|TERRAIN"
       ],
       [
-        "ESCAPE ROOM",
-        "ENIGME|EQUIPE|TEMPS|PIECE|INDICE"
-      ],
-      [
-        "URBAN EXPLORATION",
-        "ABANDONNE|EXPLORER|PHOTO|INTERDIT|BATIMENT"
-      ],
-      [
-        "BULLET JOURNAL",
-        "CARNET|ORGANISER|CREATIF|LISTES|DECORE"
-      ],
-      [
         "TERRARIUM",
         "VERRE|PLANTE|MINIATURE|HUMIDE|CREER"
       ],
@@ -11234,10 +10991,6 @@ const WORDS = {
       [
         "LONGBOARD",
         "PLANCHE|LONGUE|ROUE|DESCENTE|CRUISER"
-      ],
-      [
-        "BATTLE ROYALE",
-        "DERNIER|VIVANT|ZONE|LOOT|COMBAT"
       ]
     ],
     3: [
@@ -11718,18 +11471,6 @@ const WORDS = {
         "COSTUME|PERSONNAGE|CONVENTION|FABRIQUER|TRANSFORMER"
       ],
       [
-        "CHEAT CODE",
-        "TRICHE|SECRET|INVINCIBLE|VIE|INFINI"
-      ],
-      [
-        "BOSS FINAL",
-        "DERNIER|COMBAT|DIFFICILE|PUISSANT|MUSIQUE"
-      ],
-      [
-        "GAME OVER",
-        "FIN|PERDU|RECOMMENCER|ECRAN|MORT"
-      ],
-      [
         "LOOT",
         "BUTIN|COFFRE|OBJET|RARE|RAMASSER"
       ],
@@ -11756,10 +11497,6 @@ const WORDS = {
       [
         "GG",
         "BIEN|JOUE|FIN|SPORTIF|RESPECT"
-      ],
-      [
-        "LEVEL UP",
-        "MONTER|NIVEAU|EXPERIENCE|AMELIORER|COMPETENCE"
       ]
     ],
     2: [
@@ -12342,14 +12079,6 @@ const WORDS = {
         "DESSIN|MOUVEMENT|IMAGE|PIXAR|STUDIO"
       ],
       [
-        "COMEDIE MUSICALE",
-        "CHANTER|DANSER|SCENE|SPECTACLE|MUSICAL"
-      ],
-      [
-        "ROAD MOVIE",
-        "VOYAGE|ROUTE|VOITURE|DECOUVERTE|AVENTURE"
-      ],
-      [
         "BIOPIC",
         "VIE|REELLE|PERSONNAGE|HISTOIRE|CELEBRE"
       ],
@@ -12360,14 +12089,6 @@ const WORDS = {
       [
         "FESTIVAL",
         "CANNES|VENISE|BERLIN|JURY|PALME"
-      ],
-      [
-        "PALME D'OR",
-        "CANNES|RECOMPENSE|MEILLEUR|PRESTIGE|JURY"
-      ],
-      [
-        "COURT-METRAGE",
-        "COURT|FILM|FESTIVAL|MINUTE|COMPACT"
       ],
       [
         "DOCUMENTAIRE",
@@ -12392,14 +12113,6 @@ const WORDS = {
       [
         "WESTERN",
         "COWBOY|DESERT|DUEL|CHEVAL|SALOON"
-      ],
-      [
-        "SCIENCE-FICTION",
-        "FUTUR|ESPACE|ALIEN|ROBOT|TECHNOLOGIE"
-      ],
-      [
-        "SPIN-OFF",
-        "DERIVE|PERSONNAGE|SECONDAIRE|UNIVERS|SERIE"
       ],
       [
         "CROSSOVER",
@@ -12752,72 +12465,12 @@ const WORDS = {
         "TUEUR|PLANTE|FILLETTE|LAIT|PROFESSIONNEL"
       ],
       [
-        "LE CINQUIEME ELEMENT",
-        "FUTUR|ORANGE|TAXI|ELEMENT|MULTIPASS"
-      ],
-      [
-        "DARK KNIGHT",
-        "BATMAN|JOKER|NOLAN|GOTHAM|NUIT"
-      ],
-      [
-        "PULP FICTION",
-        "TARANTINO|VALISE|DANSE|BURGER|DIALOGUE"
-      ],
-      [
-        "KILL BILL",
-        "KATANA|VENGEANCE|MARIEE|JAUNE|TARANTINO"
-      ],
-      [
-        "GRAN TORINO",
-        "VOITURE|VIEUX|VOISIN|EASTWOOD|QUARTIER"
-      ],
-      [
         "JAWS",
         "REQUIN|PLAGE|PEUR|BRODY|ETE"
       ],
       [
-        "DJANGO UNCHAINED",
-        "ESCLAVE|WESTERN|LIBRE|BOUNTY|TARANTINO"
-      ],
-      [
-        "NO COUNTRY FOR OLD MEN",
-        "COIN|DESTIN|CHASSEUR|DESERT|FRERES"
-      ],
-      [
-        "RESERVOIR DOGS",
-        "COULEUR|BRAQUAGE|TARANTINO|COSTUME|TIR"
-      ],
-      [
-        "LE DINER DE CONS",
-        "DINER|IDIOT|COMIQUE|TELEPHONE|PERLE"
-      ],
-      [
-        "BIENVENUE CHEZ LES CHTIS",
-        "NORD|SUD|ACCENT|POSTE|DROLE"
-      ],
-      [
         "NIKITA",
         "TUEUSE|BLONDE|BESSON|CONVERSION|GOUVERNEMENT"
-      ],
-      [
-        "LE PERE NOEL EST UNE ORDURE",
-        "NOEL|SOS|AMITIE|COMIQUE|THEATRE"
-      ],
-      [
-        "LA CITE DE LA PEUR",
-        "CANNES|COMIQUE|TUEUR|ASSASSIN|CHABAT"
-      ],
-      [
-        "KUNG FU PANDA",
-        "PANDA|ARTS|MARTIAUX|DRAGON|GUERRIER"
-      ],
-      [
-        "VICE-VERSA",
-        "EMOTION|JOIE|TRISTESSE|CERVEAU|PIXAR"
-      ],
-      [
-        "MONSTRES ET CIE",
-        "MONSTRE|PORTE|ENFANT|USINE|CRI"
       ],
       [
         "NEMO",
@@ -12836,16 +12489,8 @@ const WORDS = {
         "ANIMAL|VILLE|POLICE|LAPIN|RENARD"
       ],
       [
-        "LES MINIONS",
-        "JAUNE|PETIT|MECHANT|BANANA|DROLE"
-      ],
-      [
         "ROCKY",
         "BOXE|ESCALIER|PHILADELPHIE|CHAMPION|STALLONE"
-      ],
-      [
-        "TOP GUN",
-        "AVION|PILOTE|MAVERICK|PLAGE|VOLLEY"
       ]
     ],
     3: [
@@ -13202,10 +12847,6 @@ const WORDS = {
         "FORME|CHANGER|FAMILLE|COULEUR|ROND"
       ],
       [
-        "PETIT OURS BRUN",
-        "OURS|PETIT|QUOTIDIEN|ENFANT|HISTOIRE"
-      ],
-      [
         "TCHOUPI",
         "PINGOUIN|ENFANT|DOUDOU|ECOLE|QUOTIDIEN"
       ],
@@ -13214,16 +12855,8 @@ const WORDS = {
         "CHAT|ROBOT|FUTUR|POCHE|GADGET"
       ],
       [
-        "SAINT SEIYA",
-        "CHEVALIER|ARMURE|ZODIAQUE|COSMOS|COMBAT"
-      ],
-      [
         "GOLDORAK",
         "ROBOT|GEANT|COMBAT|ESPACE|PILOTE"
-      ],
-      [
-        "NICKY LARSON",
-        "DETECTIVE|MASSUE|HUMOUR|JAPON|KAORI"
       ],
       [
         "COCOMELON",
@@ -13560,16 +13193,8 @@ const WORDS = {
         "VAMPIRE|FOUET|DRACULA|NUIT|ANIMATION"
       ],
       [
-        "BLUE EYE SAMURAI",
-        "JAPON|SAMOURAI|VENGEANCE|MIXTE|ANIMATION"
-      ],
-      [
         "FALLOUT",
         "ABRI|NUCLEAIRE|WASTELAND|RETRO|SERIE"
-      ],
-      [
-        "3 BODY PROBLEM",
-        "CHINE|ALIEN|PHYSIQUE|CIVILISATION|MYSTERE"
       ],
       [
         "SILO",
@@ -13580,36 +13205,12 @@ const WORDS = {
         "GRAND|FORT|ERRANT|JUSTICE|MUSCLE"
       ],
       [
-        "SLOW HORSES",
-        "ESPION|RATE|LONDRES|MI5|SARCASME"
-      ],
-      [
         "BLEACH",
         "SHINIGAMI|EPEE|HOLLOW|ICHIGO|BANKAI"
       ],
       [
-        "BLACK CLOVER",
-        "MAGIE|GRIMOIRE|ASTA|CHEVALIER|DEMON"
-      ],
-      [
-        "SWORD ART ONLINE",
-        "VR|PIEGE|JEU|EPEE|MORT"
-      ],
-      [
-        "TOKYO REVENGERS",
-        "TEMPS|GANG|DELINQUANT|SAUVER|JAPON"
-      ],
-      [
         "RE:ZERO",
         "BOUCLE|MORT|REVENIR|SOUFFRANCE|EMILIA"
-      ],
-      [
-        "SEVEN DEADLY SINS",
-        "PECHE|CHEVALIER|PRINCESSE|POUVOIR|QUETE"
-      ],
-      [
-        "CLASSROOM ASSASSINATION",
-        "PIEUVRE|PROFESSEUR|TUER|CLASSE|MISSILE"
       ]
     ],
     3: [
@@ -13804,18 +13405,6 @@ const WORDS = {
       [
         "",
         ""
-      ],
-      [
-        "SERIAL EXPERIMENTS LAIN",
-        "INTERNET|REALITE|IDENTITE|DIEU|SOMBRE"
-      ],
-      [
-        "PARANOIA AGENT",
-        "PSYCHOLOGIE|SOCIETE|JAPON|BATTE|MYSTERE"
-      ],
-      [
-        "TATAMI GALAXY",
-        "CHOIX|UNIVERSITE|BOUCLE|RAPIDE|JAPON"
       ],
       [
         "MUSHISHI",
@@ -14042,10 +13631,6 @@ const WORDS = {
         "INSPIRATION|BEAUTE|ARTISTE|FEMME|CREATIF"
       ],
       [
-        "COUP DE COEUR",
-        "SOUDAIN|EMOTION|RENCONTRE|ATTIRANCE|FLASH"
-      ],
-      [
         "IDYLLE",
         "AMOUR|DEBUT|DOUX|ROMANTIQUE|TENDRE"
       ],
@@ -14068,14 +13653,6 @@ const WORDS = {
       [
         "FIANCÉ",
         "BAGUE|MARIAGE|PROMESSE|DEMANDE|GENOU"
-      ],
-      [
-        "PETIT AMI",
-        "COPAIN|COUPLE|RELATION|SORTIR|AMOUREUX"
-      ],
-      [
-        "PETITE AMIE",
-        "COPINE|COUPLE|RELATION|SORTIR|AMOUREUSE"
       ],
       [
         "MARIAGE",
@@ -14630,10 +14207,6 @@ const WORDS = {
         "DANSE|VOILE|SEPT|SEDUCTRICE|BIBLIQUE"
       ],
       [
-        "MARQUIS DE SADE",
-        "ECRITS|SCANDALE|PRISON|LIBERTINAGE|PHILOSOPHE"
-      ],
-      [
         "HEDONISME",
         "PLAISIR|PHILOSOPHIE|EPICURE|SENS|RECHERCHE"
       ],
@@ -14651,7 +14224,7 @@ const WORDS = {
       ]
     ]
   }
-};;;;;
+};;;;;;
 
 // Password final links — maps category+word to thematic password words
 const PASSWORD_LINKS = {
@@ -15487,13 +15060,15 @@ function originalPrepareWord() {
   document.getElementById('btnHint').classList.add('hint-pulse');
   document.getElementById('btnHint').innerHTML = '<span class="btn-icon">&#128161;</span> Indice';
 
-  // In original mode: before timer starts, show "Voir le mot" only
+  // In original mode: before timer starts, show "Voir le mot" as main button
   // Once timer is running, reveal word immediately
   if (!G.timerInterval) {
     document.getElementById('btnCorrect').style.display = 'none';
     document.getElementById('btnSkip').style.display = 'none';
-    document.getElementById('btnToggle').innerHTML = '<span class="btn-icon">&#128065;</span> Voir le mot';
-    document.getElementById('btnToggle').style.display = '';
+    const toggleBtn = document.getElementById('btnToggle');
+    toggleBtn.innerHTML = '<span class="btn-icon">&#128065;</span> Voir le mot';
+    toggleBtn.className = 'ow-btn orange big hint-pulse';
+    toggleBtn.style.display = '';
     document.getElementById('btnHint').style.display = 'none';
     document.getElementById('btnPause').style.display = 'none';
   } else {
@@ -15531,11 +15106,14 @@ function originalRevealWord() {
   setTimeout(() => display.classList.remove('word-reveal'), 500);
   card.className = 'word-front glow-gold';
 
-  // Show game controls
+  // Show game controls, restore toggle button style
   document.getElementById('btnCorrect').style.display = '';
   document.getElementById('btnSkip').style.display = '';
   document.getElementById('btnHint').style.display = '';
-  document.getElementById('btnToggle').style.display = 'none';
+  document.getElementById('btnPause').style.display = '';
+  const toggleBtn = document.getElementById('btnToggle');
+  toggleBtn.className = 'ow-btn dark small';
+  toggleBtn.style.display = 'none';
 
   // Start the team timer if not already running
   if (!G.timerInterval) {
