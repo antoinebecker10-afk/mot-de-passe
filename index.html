@@ -14473,13 +14473,11 @@ function startGame() {
     G.maxRounds = 99;
     updateScoreDisplay();
     document.getElementById('gRound').textContent = `Tour de ${G.team1}`;
-    setCommentary(`${G.team1} commence ! C'est parti !`);
+    setCommentary(`${G.team1} commence ! Appuyez sur "Voir le mot" pour lancer le chrono.`);
     document.getElementById('powerupBar').innerHTML = '';
     originalPrepareWord();
     showScreen('game');
     Audio.fanfare();
-    // Auto-reveal first word and start timer after a brief delay
-    setTimeout(() => { originalRevealWord(); }, 600);
     return;
   }
 
@@ -15091,7 +15089,7 @@ function originalPrepareWord() {
   document.getElementById('btnHint').innerHTML = '<span class="btn-icon">&#128161;</span> Indice';
 
   // In original mode: before timer starts, show "Voir le mot" as main button
-  // Once timer is running, reveal word immediately
+  // Move it to action-hint container for full visibility
   if (!G.timerInterval) {
     document.getElementById('btnCorrect').style.display = 'none';
     document.getElementById('btnSkip').style.display = 'none';
@@ -15099,6 +15097,8 @@ function originalPrepareWord() {
     toggleBtn.innerHTML = '<span class="btn-icon">&#128065;</span> Voir le mot';
     toggleBtn.className = 'ow-btn orange big hint-pulse';
     toggleBtn.style.display = '';
+    // Move toggle into the hint container (top, full width)
+    document.querySelector('.action-hint').appendChild(toggleBtn);
     document.getElementById('btnHint').style.display = 'none';
     document.getElementById('btnPause').style.display = 'none';
   } else {
@@ -15136,7 +15136,7 @@ function originalRevealWord() {
   setTimeout(() => display.classList.remove('word-reveal'), 500);
   card.className = 'word-front glow-gold';
 
-  // Show game controls, restore toggle button style
+  // Show game controls, restore toggle button to action-row
   document.getElementById('btnCorrect').style.display = '';
   document.getElementById('btnSkip').style.display = '';
   document.getElementById('btnHint').style.display = '';
@@ -15144,6 +15144,8 @@ function originalRevealWord() {
   const toggleBtn = document.getElementById('btnToggle');
   toggleBtn.className = 'ow-btn dark small';
   toggleBtn.style.display = 'none';
+  // Move back to action-row
+  document.querySelector('.action-row').insertBefore(toggleBtn, document.getElementById('btnPause'));
 
   // Start the team timer if not already running
   if (!G.timerInterval) {
@@ -15215,10 +15217,8 @@ function originalTimerEnd() {
       G.revealedHints = 0;
       updateScoreDisplay();
       document.getElementById('gRound').textContent = `Tour de ${G.team2}`;
-      setCommentary(`${G.team2}, c'est à vous ! C'est parti !`);
+      setCommentary(`${G.team2}, c'est à vous ! Appuyez sur "Voir le mot" pour commencer.`);
       originalPrepareWord();
-      // Auto-reveal first word for team 2
-      setTimeout(() => { originalRevealWord(); }, 600);
     }, 2500);
   } else if (G.originalPhase === 3) {
     // Team 2 done
