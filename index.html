@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{touch-action:manipulation;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+html{touch-action:manipulation}
 :root{
   --orange:#FF6B00;--orange-light:#FFA64D;--orange-glow:0 0 20px #FF6B0088,0 0 40px #FF6B0044;
   --blue:#00A1FF;--blue-light:#4DC4FF;--blue-glow:0 0 20px #00A1FF88,0 0 40px #00A1FF44;
@@ -24,7 +24,7 @@ html{touch-action:manipulation;padding:env(safe-area-inset-top) env(safe-area-in
   --font-title:'Bebas Neue','Impact',sans-serif;
   --font-body:'Inter','Segoe UI',system-ui,sans-serif;
 }
-html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--white);font-family:var(--font-body)}
+html,body{width:100%;height:100dvh;overflow:hidden;background:var(--bg);color:var(--white);font-family:var(--font-body);padding-bottom:env(safe-area-inset-bottom)}
 body{position:relative}
 
 /* ===== BACKGROUND ANIMATION ===== */
@@ -120,7 +120,7 @@ body::before{
 .menu-card .desc{color:var(--muted);font-size:.8rem;margin-top:6px}
 
 /* ===== CONFIG ===== */
-#config{gap:16px}
+#config{gap:16px;justify-content:flex-start;padding-top:40px}
 .config-section{max-width:600px;width:100%}
 .config-section h3{font-family:var(--font-title);font-size:1.3rem;letter-spacing:3px;color:var(--muted);margin-bottom:10px;text-transform:uppercase}
 .team-row{display:flex;gap:12px;align-items:center;margin-bottom:10px}
@@ -176,8 +176,8 @@ body::before{
 
 .game-body{
   flex:1;width:100%;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;padding:16px 20px;gap:10px;position:relative;
-  overflow-y:auto;
+  justify-content:safe center;padding:16px 20px;gap:10px;position:relative;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
 }
 
 .round-indicator{
@@ -224,7 +224,7 @@ body::before{
 
 /* INLINE CONTROLS — directly under card */
 .game-actions{
-  width:min(90vw,520px);display:flex;flex-direction:column;gap:8px;align-items:center;
+  width:min(92vw,520px);display:flex;flex-direction:column;gap:6px;align-items:center;
 }
 .action-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;width:100%}
 .action-main{display:flex;gap:8px;width:100%}
@@ -532,27 +532,53 @@ body::before{
 @media(max-width:600px){
   .game-header{padding:8px 12px}
   .score-val{font-size:1.6rem}
+  .score-name{font-size:.6rem;letter-spacing:1px}
+  .vs-badge{font-size:.8rem;padding:3px 10px}
+  .round-indicator{font-size:.9rem;letter-spacing:2px}
   .ow-btn{padding:10px 16px;font-size:.9rem;letter-spacing:2px}
   .ow-btn.big{font-size:1rem;padding:12px 16px}
   .ow-btn.small{padding:8px 12px;font-size:.75rem}
+  .action-hint .ow-btn{font-size:1.1rem;padding:12px 16px}
   .action-main{flex-direction:row}
   .action-row{gap:5px}
-  .game-body{padding:10px 12px;gap:8px}
-  .word-front{padding:18px 20px}
+  .game-body{padding:10px 12px;gap:6px}
+  .word-front{padding:16px 16px}
+  .word-card{min-height:80px;margin:4px 0}
   .menu-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .menu-card{padding:20px 14px}
+  .menu-card .title{font-size:1.2rem}
+  .splash-logo img{width:clamp(180px,55vw,400px)}
   .final-scores{gap:20px}
   .final-score-val{font-size:2.5rem}
   .powerup-bar{gap:4px}
   .powerup-btn{padding:4px 8px;font-size:.7rem}
   .hint-row{padding:6px 12px;margin:3px 0}
   .hint-text{font-size:1rem}
+  .points-popup{font-size:2.5rem}
+  .points-popup span{padding:10px 20px}
+  .turn-indicator{font-size:1.1rem;padding:4px 18px}
+  .commentary{font-size:.75rem;min-height:16px}
+  .timer-row{width:min(90vw,520px)}
+  .tv-banner{font-size:.6rem;padding:4px 12px}
 }
 @media(max-width:380px){
   .ow-btn.big{font-size:.85rem;padding:10px 12px;letter-spacing:1px}
   .ow-btn.big .btn-icon{font-size:1.1rem;margin-right:3px}
+  .action-hint .ow-btn{font-size:.95rem;padding:10px 12px}
   .action-row .ow-btn.small{padding:6px 8px;font-size:.7rem;letter-spacing:1px}
-  .score-val{font-size:1.4rem}
-  .turn-indicator{font-size:1rem;padding:4px 16px}
+  .score-val{font-size:1.3rem;min-width:36px}
+  .score-name{font-size:.55rem}
+  .turn-indicator{font-size:.9rem;padding:3px 14px;letter-spacing:2px}
+  .word-front{padding:14px 12px}
+  .word-hidden{font-size:clamp(1.2rem,4.5vw,2rem);letter-spacing:6px}
+  .menu-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .menu-card{padding:16px 10px}
+  .menu-card .icon{font-size:1.6rem;margin-bottom:6px}
+  .menu-card .title{font-size:1rem;letter-spacing:2px}
+  .menu-card .desc{font-size:.7rem}
+  .points-popup{font-size:2rem}
+  .config-section{padding:0 4px}
+  .game-body{gap:4px;padding:8px 8px}
 }
 @media(min-width:1200px){
   .game-body{padding:20px 40px}
