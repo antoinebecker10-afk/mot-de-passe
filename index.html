@@ -481,15 +481,12 @@ body::before{
   100%{transform:scale(40);opacity:0}
 }
 
-/* Skip — glitch effect */
+/* Skip — subtle dim effect */
 .glitch{animation:glitch .3s ease-out}
 @keyframes glitch{
   0%{filter:none}
-  20%{filter:hue-rotate(90deg) saturate(3);transform:translateX(-3px)}
-  40%{filter:hue-rotate(-90deg) saturate(2);transform:translateX(3px)}
-  60%{filter:hue-rotate(180deg);transform:translateX(-2px)}
-  80%{filter:hue-rotate(0deg) saturate(1);transform:translateX(1px)}
-  100%{filter:none;transform:translateX(0)}
+  50%{filter:brightness(.7)}
+  100%{filter:none}
 }
 
 /* Victory firework burst */
@@ -15089,13 +15086,6 @@ function skipWord() {
   display.classList.add('word-reveal');
   card.className = 'word-front glow-red';
   setTimeout(() => display.classList.remove('word-reveal'), 500);
-
-  document.getElementById('gameBody').classList.add('flash-red');
-  document.getElementById('game').classList.add('shake');
-  setTimeout(() => {
-    document.getElementById('gameBody').classList.remove('flash-red');
-    document.getElementById('game').classList.remove('shake');
-  }, 400);
 
   setCommentary(randomFrom(COMMENTS.skip));
   VFX.resetStreak();
