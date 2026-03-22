@@ -501,6 +501,11 @@ body::before{
       <div class="title">Solo</div>
       <div class="desc">Entraînement — le jeu donne les indices</div>
     </div>
+    <div class="menu-card c-orange" onclick="startConfig('original')" style="grid-column:1/-1">
+      <div class="icon">🎬</div>
+      <div class="title">Original</div>
+      <div class="desc">Comme à la télé — timer par équipe, indices libres</div>
+    </div>
   </div>
   <div style="display:flex;gap:10px;margin-top:24px">
     <button class="ow-btn dark small" onclick="showScreen('rules')">Règles</button>
@@ -544,7 +549,7 @@ body::before{
     <div class="cat-grid" id="catGrid"></div>
   </div>
 
-  <div class="config-section">
+  <div class="config-section" id="timerConfig">
     <h3>Timer (secondes par tour)</h3>
     <div class="config-options" id="timerOpts">
       <div class="config-opt" data-val="0">Désactivé</div>
@@ -552,6 +557,16 @@ body::before{
       <div class="config-opt selected" data-val="60">60s</div>
       <div class="config-opt" data-val="90">90s</div>
       <div class="config-opt" data-val="120">120s</div>
+    </div>
+  </div>
+
+  <div class="config-section" id="durationConfig" style="display:none">
+    <h3>Durée par équipe</h3>
+    <div class="config-options" id="durationOpts">
+      <div class="config-opt" data-val="60">1 min</div>
+      <div class="config-opt selected" data-val="180">3 min</div>
+      <div class="config-opt" data-val="300">5 min</div>
+      <div class="config-opt" data-val="600">10 min</div>
     </div>
   </div>
 
@@ -1177,6 +1192,11 @@ let G = {
   timerInterval: null, timerRemaining: 0,
   // Pause
   paused: false,
+  // Original mode
+  originalDuration: 180,
+  originalPhase: 0, // 0=not started, 1=team1 playing, 2=team1 done, 3=team2 playing, 4=done
+  originalWordRevealed: false, // has "Voir le mot" been clicked this word?
+  originalScore1: 0, originalScore2: 0,
 };
 
 // ===== SCREEN MANAGEMENT =====
@@ -1201,9 +1221,28 @@ function startConfig(mode) {
   const title = document.getElementById('configTitle');
   const teamCfg = document.getElementById('teamConfig');
 
+  const durationCfg = document.getElementById('durationConfig');
+  const timerCfg = document.getElementById('timerConfig');
+  const roundsCfg = document.getElementById('roundsOpts').parentElement;
+  const diffCfg = document.getElementById('diffOpts').parentElement;
+
+  // Reset visibility
+  durationCfg.style.display = 'none';
+  timerCfg.style.display = '';
+  roundsCfg.style.display = '';
+  diffCfg.style.display = '';
+
   if (mode === 'classique') { title.textContent = 'Mode Classique'; teamCfg.style.display = ''; }
   else if (mode === 'party') { title.textContent = 'Mode Party'; teamCfg.style.display = 'none'; }
   else if (mode === 'duel') { title.textContent = 'Mode Duel'; teamCfg.style.display = ''; }
+  else if (mode === 'original') {
+    title.textContent = 'Mode Original';
+    teamCfg.style.display = '';
+    timerCfg.style.display = 'none';
+    roundsCfg.style.display = 'none';
+    diffCfg.style.display = '';
+    durationCfg.style.display = '';
+  }
   else { title.textContent = 'Mode Solo'; teamCfg.style.display = 'none'; }
 
   // Build category tags
@@ -1223,6 +1262,7 @@ function startConfig(mode) {
   setupConfigOpts('roundsOpts');
   setupConfigOpts('diffOpts');
   setupConfigOpts('timerOpts');
+  setupConfigOpts('durationOpts');
 
   showScreen('config');
 }
@@ -1260,6 +1300,23 @@ function startGame() {
   G.powerups1 = { double: false, freeHint: false, steal: false };
   G.powerups2 = { double: false, freeHint: false, steal: false };
   G.activeDouble = false;
+
+  if (G.mode === 'original') {
+    G.originalDuration = getConfigVal('durationOpts');
+    G.originalPhase = 1;
+    G.originalScore1 = 0;
+    G.originalScore2 = 0;
+    G.timerSeconds = 0; // disable per-word timer
+    G.maxRounds = 99;
+    updateScoreDisplay();
+    document.getElementById('gRound').textContent = `Tour de ${G.team1}`;
+    setCommentary(`${G.team1} commence ! Appuyez sur "Voir le mot" pour lancer le chrono.`);
+    document.getElementById('powerupBar').innerHTML = '';
+    originalPrepareWord();
+    showScreen('game');
+    Audio.fanfare();
+    return;
+  }
 
   updateScoreDisplay();
   updateRoundDisplay();
@@ -1311,6 +1368,13 @@ function nextWord() {
   document.getElementById('btnHint').disabled = false;
   document.getElementById('btnToggle').innerHTML = '<span class="btn-icon">&#128065;</span> Voir le mot';
 
+  // Restore button visibility for non-original modes
+  document.getElementById('btnCorrect').style.display = '';
+  document.getElementById('btnSkip').style.display = '';
+  document.getElementById('btnHint').style.display = '';
+  document.getElementById('btnToggle').style.display = '';
+  document.getElementById('btnPause').style.display = '';
+
   updateTeamDisplay();
   startTimer();
 
@@ -1321,6 +1385,10 @@ function nextWord() {
 
 // ===== GAME CONTROLS =====
 function toggleWord() {
+  if (G.mode === 'original' && !G.originalWordRevealed) {
+    originalRevealWord();
+    return;
+  }
   G.wordVisible = !G.wordVisible;
   const display = document.getElementById('wordDisplay');
   const card = document.getElementById('wordCard');
@@ -1342,6 +1410,7 @@ function toggleWord() {
 }
 
 function giveHint() {
+  if (G.mode === 'original') { originalHint(); return; }
   if (G.revealedHints >= G.currentHints.length) return;
 
   const hint = G.currentHints[G.revealedHints];
@@ -1362,6 +1431,7 @@ function giveHint() {
 }
 
 function correctAnswer() {
+  if (G.mode === 'original') { originalCorrect(); return; }
   stopTimer();
   Audio.correct();
 
@@ -1426,6 +1496,7 @@ function correctAnswer() {
 }
 
 function skipWord() {
+  if (G.mode === 'original') { originalSkip(); return; }
   stopTimer();
   Audio.skip();
 
@@ -1823,6 +1894,267 @@ function spawnConfetti() {
     container.appendChild(c);
     setTimeout(() => c.remove(), 4000);
   }
+}
+
+// ===== ORIGINAL MODE =====
+function originalPrepareWord() {
+  const pool = getWordPool();
+  if (pool.length === 0) { G.usedWords.clear(); return originalPrepareWord(); }
+
+  const word = pool[Math.floor(Math.random() * pool.length)];
+  G.currentWord = word;
+  G.currentHints = [];
+  G.revealedHints = 0;
+  G.wordVisible = false;
+  G.originalWordRevealed = false;
+  G.usedWords.add(word.word);
+
+  const display = document.getElementById('wordDisplay');
+  const card = document.getElementById('wordCard');
+  display.textContent = '? ? ? ? ?';
+  display.style.color = '';
+  card.className = 'word-front';
+  document.getElementById('hintsZone').innerHTML = '';
+  document.getElementById('btnHint').disabled = false;
+  document.getElementById('btnHint').innerHTML = '<span class="btn-icon">&#128161;</span> Indice';
+
+  // In original mode: before timer starts, show "Voir le mot" only
+  // Once timer is running, buttons are managed by originalRevealWord
+  if (!G.timerInterval) {
+    document.getElementById('btnCorrect').style.display = 'none';
+    document.getElementById('btnSkip').style.display = 'none';
+    document.getElementById('btnToggle').innerHTML = '<span class="btn-icon">&#128065;</span> Voir le mot';
+    document.getElementById('btnToggle').style.display = '';
+    document.getElementById('btnHint').style.display = 'none';
+    document.getElementById('btnPause').style.display = 'none';
+  }
+
+  updateTeamDisplay();
+
+  const cardWrap = document.getElementById('wordCardWrap');
+  cardWrap.classList.add('word-enter');
+  setTimeout(() => cardWrap.classList.remove('word-enter'), 500);
+}
+
+function originalRevealWord() {
+  G.originalWordRevealed = true;
+  G.wordVisible = true;
+
+  const display = document.getElementById('wordDisplay');
+  const card = document.getElementById('wordCard');
+  display.textContent = G.currentWord.word;
+  display.style.color = 'var(--gold)';
+  display.classList.add('word-reveal');
+  setTimeout(() => display.classList.remove('word-reveal'), 500);
+  card.className = 'word-front glow-gold';
+
+  // Show game controls
+  document.getElementById('btnCorrect').style.display = '';
+  document.getElementById('btnSkip').style.display = '';
+  document.getElementById('btnHint').style.display = '';
+  document.getElementById('btnToggle').style.display = 'none';
+
+  // Start the team timer if not already running
+  if (!G.timerInterval) {
+    originalStartTimer();
+  }
+}
+
+function originalStartTimer() {
+  G.timerRemaining = G.originalDuration;
+  document.getElementById('timerRow').style.display = '';
+  originalUpdateTimer();
+
+  G.timerInterval = setInterval(() => {
+    if (G.paused) return;
+    G.timerRemaining--;
+    originalUpdateTimer();
+
+    if (G.timerRemaining <= 5 && G.timerRemaining > 0) Audio.countdown();
+    if (G.timerRemaining <= 0) {
+      originalTimerEnd();
+    }
+  }, 1000);
+}
+
+function originalUpdateTimer() {
+  const total = G.originalDuration;
+  const pct = (G.timerRemaining / total) * 100;
+  const fill = document.getElementById('timerFill');
+  const text = document.getElementById('timerText');
+
+  fill.style.width = pct + '%';
+  const mins = Math.floor(G.timerRemaining / 60);
+  const secs = G.timerRemaining % 60;
+  text.textContent = mins > 0 ? `${mins}:${secs.toString().padStart(2, '0')}` : secs;
+
+  fill.className = 'timer-fill';
+  text.className = 'timer-text';
+  if (pct < 20) { fill.classList.add('critical'); text.classList.add('critical'); }
+  else if (pct < 40) { fill.classList.add('warning'); text.classList.add('warning'); }
+}
+
+function originalTimerEnd() {
+  stopTimer();
+  Audio.buzz();
+  document.getElementById('game').classList.add('shake');
+  setTimeout(() => document.getElementById('game').classList.remove('shake'), 400);
+
+  if (G.originalPhase === 1) {
+    // Team 1 done, store score
+    G.originalScore1 = G.score1;
+    G.originalPhase = 2;
+
+    // Show transition to team 2
+    const display = document.getElementById('wordDisplay');
+    const card = document.getElementById('wordCard');
+    display.textContent = 'TEMPS ECOULÉ';
+    display.style.color = 'var(--red)';
+    card.className = 'word-front glow-red';
+    document.getElementById('btnCorrect').style.display = 'none';
+    document.getElementById('btnSkip').style.display = 'none';
+    document.getElementById('btnHint').style.display = 'none';
+    document.getElementById('timerRow').style.display = 'none';
+
+    setCommentary(`Fin du temps pour ${G.team1} ! Au tour de ${G.team2} !`);
+
+    setTimeout(() => {
+      G.originalPhase = 3;
+      G.currentTeam = 2;
+      G.revealedHints = 0;
+      updateScoreDisplay();
+      document.getElementById('gRound').textContent = `Tour de ${G.team2}`;
+      setCommentary(`${G.team2}, c'est à vous ! Appuyez sur "Voir le mot" pour commencer.`);
+      originalPrepareWord();
+    }, 2500);
+  } else if (G.originalPhase === 3) {
+    // Team 2 done
+    G.originalScore2 = G.score2;
+    G.originalPhase = 4;
+    setTimeout(() => originalEndGame(), 1500);
+  }
+}
+
+function originalCorrect() {
+  Audio.correct();
+
+  // Scoring: 5pts base, -1 per hint used (min 1pt)
+  const pointsTable = [5, 3, 2, 1];
+  let points = pointsTable[Math.min(G.revealedHints, pointsTable.length - 1)];
+
+  if (G.currentTeam === 1) G.score1 += points;
+  else G.score2 += points;
+
+  G.wordsPlayed++;
+  G.wordsCorrect++;
+
+  const display = document.getElementById('wordDisplay');
+  const card = document.getElementById('wordCard');
+  display.textContent = G.currentWord.word;
+  display.style.color = 'var(--green)';
+  display.classList.add('word-reveal');
+  card.className = 'word-front glow-green';
+  setTimeout(() => display.classList.remove('word-reveal'), 500);
+
+  showPointsPopup(points, G.currentTeam === 1 ? 'var(--orange)' : 'var(--blue)');
+
+  document.getElementById('gameBody').classList.add('flash-green');
+  document.getElementById('game').classList.add('shake');
+  const rect = document.getElementById('wordCardWrap').getBoundingClientRect();
+  spawnParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, G.currentTeam === 1 ? '#FF6B00' : '#00A1FF');
+  setTimeout(() => {
+    document.getElementById('gameBody').classList.remove('flash-green');
+    document.getElementById('game').classList.remove('shake');
+  }, 400);
+
+  setCommentary(randomFrom(COMMENTS.correct));
+  updateScoreDisplay();
+
+  // Next word (timer keeps running)
+  setTimeout(() => {
+    originalPrepareWord();
+    // Re-reveal immediately since timer is running
+    originalRevealWord();
+  }, 1000);
+}
+
+function originalSkip() {
+  Audio.skip();
+  G.wordsPlayed++;
+  G.wordsSkipped++;
+
+  const display = document.getElementById('wordDisplay');
+  const card = document.getElementById('wordCard');
+  display.textContent = G.currentWord.word;
+  display.style.color = 'var(--red)';
+  display.classList.add('word-reveal');
+  card.className = 'word-front glow-red';
+  setTimeout(() => display.classList.remove('word-reveal'), 500);
+
+  document.getElementById('gameBody').classList.add('flash-red');
+  setTimeout(() => document.getElementById('gameBody').classList.remove('flash-red'), 400);
+
+  setCommentary(randomFrom(COMMENTS.skip));
+
+  setTimeout(() => {
+    originalPrepareWord();
+    originalRevealWord();
+  }, 1000);
+}
+
+function originalHint() {
+  if (G.revealedHints >= 3) return;
+
+  G.revealedHints++;
+
+  const zone = document.getElementById('hintsZone');
+  const row = document.createElement('div');
+  const teamClass = G.currentTeam === 1 ? 'orange' : 'blue';
+  row.className = `hint-row ${teamClass}`;
+  row.innerHTML = `<span class="hint-num">${G.revealedHints}</span><span class="hint-text">Indice ${G.revealedHints}</span>`;
+  zone.appendChild(row);
+
+  Audio.ding();
+
+  if (G.revealedHints >= 3) {
+    document.getElementById('btnHint').disabled = true;
+  }
+}
+
+function originalEndGame() {
+  stopTimer();
+  Audio.fanfare();
+
+  const title = document.getElementById('resultTitle');
+  if (G.score1 > G.score2) {
+    title.textContent = `${G.team1} remporte la victoire !`;
+    title.className = 'results-title orange';
+  } else if (G.score2 > G.score1) {
+    title.textContent = `${G.team2} remporte la victoire !`;
+    title.className = 'results-title blue';
+  } else {
+    title.textContent = 'Égalité parfaite !';
+    title.className = 'results-title draw';
+  }
+
+  document.getElementById('rTeam1Name').textContent = G.team1;
+  document.getElementById('rTeam2Name').textContent = G.team2;
+  document.getElementById('rScore1').textContent = G.score1;
+  document.getElementById('rScore2').textContent = G.score2;
+
+  const durationLabel = G.originalDuration >= 60 ? `${G.originalDuration / 60} min` : `${G.originalDuration}s`;
+  const grid = document.getElementById('statsGrid');
+  grid.innerHTML = `
+    <div class="stat-card"><div class="stat-val">${G.wordsPlayed}</div><div class="stat-label">Mots joués</div></div>
+    <div class="stat-card"><div class="stat-val">${G.wordsCorrect}</div><div class="stat-label">Mots devinés</div></div>
+    <div class="stat-card"><div class="stat-val">${G.wordsSkipped}</div><div class="stat-label">Mots passés</div></div>
+    <div class="stat-card"><div class="stat-val">${durationLabel}</div><div class="stat-label">Durée / équipe</div></div>
+    <div class="stat-card"><div class="stat-val">${G.score1 + G.score2}</div><div class="stat-label">Points totaux</div></div>
+  `;
+
+  spawnConfetti();
+  saveToScoreboard();
+  showScreen('results');
 }
 
 // ===== UTILITIES =====
