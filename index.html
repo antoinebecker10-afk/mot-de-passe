@@ -238,6 +238,16 @@ body::before{
 .ow-btn .btn-icon{font-size:1.3rem;margin-right:6px;display:inline-block}
 .ow-btn.big .btn-icon{font-size:1.5rem}
 
+/* Hint button — prominent and pulsing */
+.action-hint{width:100%}
+.action-hint .ow-btn{width:100%;font-size:1.3rem;padding:16px 24px;letter-spacing:4px}
+.hint-pulse{animation:hintPulse 1.5s ease-in-out infinite}
+.hint-pulse:disabled{animation:none;opacity:.4}
+@keyframes hintPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(255,107,0,.5)}
+  50%{box-shadow:0 0 0 12px rgba(255,107,0,0)}
+}
+
 /* Animated button entrance */
 .game-actions{animation:controlsIn .3s ease-out}
 @keyframes controlsIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -282,12 +292,16 @@ body::before{
 
 /* Points popup */
 .points-popup{
-  position:fixed;font-family:var(--font-title);font-size:3.5rem;font-weight:900;
+  position:fixed;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-title);font-size:3.5rem;font-weight:900;
   pointer-events:none;z-index:9999;letter-spacing:4px;
+  animation:pointsUp 1.5s ease-out forwards;
+}
+.points-popup span{
   padding:12px 28px;border-radius:16px;
   background:rgba(0,0,0,.7);backdrop-filter:blur(6px);
   border:2px solid currentColor;
-  animation:pointsUp 1.5s ease-out forwards;
 }
 @keyframes pointsUp{
   0%{opacity:0;transform:translateY(10px) scale(.5)}
@@ -722,13 +736,15 @@ body::before{
 
     <!-- CONTROLS — directly under card -->
     <div class="game-actions">
+      <div class="action-hint">
+        <button class="ow-btn orange big hint-pulse" onclick="giveHint()" id="btnHint"><span class="btn-icon">&#128161;</span> Indice suivant</button>
+      </div>
       <div class="action-main">
         <button class="ow-btn green big" onclick="correctAnswer()" id="btnCorrect"><span class="btn-icon">&#10003;</span> Bonne réponse</button>
         <button class="ow-btn red big" onclick="skipWord()" id="btnSkip"><span class="btn-icon">&#10007;</span> Passer</button>
       </div>
       <div class="action-row">
         <button class="ow-btn dark small" onclick="toggleWord()" id="btnToggle"><span class="btn-icon">&#128065;</span> Voir le mot</button>
-        <button class="ow-btn orange small" onclick="giveHint()" id="btnHint"><span class="btn-icon">&#128161;</span> Indice suivant</button>
         <button class="ow-btn dark small" onclick="pauseGame()" id="btnPause"><span class="btn-icon">&#9208;</span> Pause</button>
       </div>
     </div>
@@ -14915,6 +14931,7 @@ function nextWord() {
   card.className = 'word-front pulse-glow';
   document.getElementById('hintsZone').innerHTML = '';
   document.getElementById('btnHint').disabled = false;
+  document.getElementById('btnHint').classList.add('hint-pulse');
   document.getElementById('btnToggle').innerHTML = '<span class="btn-icon">&#128065;</span> Voir le mot';
 
   // Restore button visibility for non-original modes
@@ -14961,6 +14978,9 @@ function toggleWord() {
 function giveHint() {
   if (G.mode === 'original') { originalHint(); return; }
   if (G.revealedHints >= G.currentHints.length) return;
+
+  const hintBtn = document.getElementById('btnHint');
+  hintBtn.classList.remove('hint-pulse');
 
   const hint = G.currentHints[G.revealedHints];
   G.revealedHints++;
@@ -15099,6 +15119,7 @@ function startTimer() {
   G.timerRemaining = G.timerSeconds;
   document.getElementById('timerRow').style.display = '';
   document.getElementById('btnHint').disabled = false;
+  document.getElementById('btnHint').classList.add('hint-pulse');
   updateTimerDisplay();
 
   G.timerInterval = setInterval(() => {
@@ -15299,12 +15320,9 @@ function updateScoreDisplay() {
 function showPointsPopup(points, color) {
   const popup = document.createElement('div');
   popup.className = 'points-popup';
-  popup.textContent = `+${points}`;
-  popup.style.left = '50%';
-  popup.style.top = '40%';
-  popup.style.transform = 'translate(-50%, -50%)';
   popup.style.color = color;
   popup.style.textShadow = `0 0 30px ${color}, 0 0 60px ${color}`;
+  popup.innerHTML = `<span>+${points}</span>`;
   document.body.appendChild(popup);
   setTimeout(() => popup.remove(), 1500);
 }
@@ -15473,6 +15491,7 @@ function originalPrepareWord() {
   card.className = 'word-front';
   document.getElementById('hintsZone').innerHTML = '';
   document.getElementById('btnHint').disabled = false;
+  document.getElementById('btnHint').classList.add('hint-pulse');
   document.getElementById('btnHint').innerHTML = '<span class="btn-icon">&#128161;</span> Indice';
 
   // In original mode: before timer starts, show "Voir le mot" only
@@ -15934,7 +15953,6 @@ document.addEventListener('touchend', (e) => {
   const dx = e.changedTouches[0].clientX - touchStartX;
   const dy = e.changedTouches[0].clientY - touchStartY;
   if (Math.abs(dx) < 50 && Math.abs(dy) < 50) return;
-  if (Math.abs(dy) > Math.abs(dx) && dy < -50) correctAnswer(); // swipe up = correct
   if (Math.abs(dx) > Math.abs(dy) && dx < -50) skipWord(); // swipe left = skip
 });
 </script>
