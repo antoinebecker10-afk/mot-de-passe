@@ -596,14 +596,14 @@ body::before{
 
 <!-- ===== SPLASH ===== -->
 <section class="screen active" id="splash" onclick="showScreen('menu')" onkeydown="showScreen('menu')">
-  <div class="splash-logo"><img src="logo.png" alt="MOT DE PASSE"></div>
+  <div class="splash-logo"><img src="logo.svg" alt="MOT DE PASSE"></div>
   <div class="splash-sub">Le jeu</div>
   <div class="splash-hint">Appuyez pour commencer</div>
 </section>
 
 <!-- ===== MENU ===== -->
 <section class="screen" id="menu">
-  <div class="splash-logo" style="margin-bottom:6px"><img src="logo.png" alt="MOT DE PASSE" style="width:clamp(160px,45vw,350px)"></div>
+  <div class="splash-logo" style="margin-bottom:6px"><img src="logo.svg" alt="MOT DE PASSE" style="width:clamp(160px,45vw,350px)"></div>
   <div class="ow-divider" style="max-width:400px"></div>
   <div class="menu-grid">
     <div class="menu-card c-orange" onclick="startConfig('classique')">
@@ -14926,13 +14926,16 @@ function nextWord() {
   cardWrap.classList.add('word-enter');
   setTimeout(() => cardWrap.classList.remove('word-enter'), 500);
 
-  display.textContent = '? ? ? ? ?';
-  display.style.color = '';
-  card.className = 'word-front pulse-glow';
+  display.textContent = word.word;
+  display.style.color = 'var(--gold)';
+  display.classList.add('word-reveal');
+  setTimeout(() => display.classList.remove('word-reveal'), 500);
+  card.className = 'word-front glow-gold';
+  G.wordVisible = true;
   document.getElementById('hintsZone').innerHTML = '';
   document.getElementById('btnHint').disabled = false;
   document.getElementById('btnHint').classList.add('hint-pulse');
-  document.getElementById('btnToggle').innerHTML = '<span class="btn-icon">&#128065;</span> Voir le mot';
+  document.getElementById('btnToggle').innerHTML = '<span class="btn-icon">&#128584;</span> Cacher';
 
   // Restore button visibility for non-original modes
   document.getElementById('btnCorrect').style.display = '';
